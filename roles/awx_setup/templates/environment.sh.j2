@@ -1,0 +1,11 @@
+DATABASE_USER={{ pg_username }}
+DATABASE_NAME={{ pg_database }}
+DATABASE_HOST={{ tower_env }}_postgres
+DATABASE_PORT=5432
+DATABASE_PASSWORD={{ pg_password | quote }}
+MEMCACHED_HOST={{ tower_env }}_memcached
+MEMCACHED_PORT=11211
+RABBITMQ_HOST={{ tower_env }}_rabbitmq
+RABBITMQ_PORT=5672
+AWX_ADMIN_USER={{ admin_username | default('admin') }}
+AWX_ADMIN_PASSWORD={{ admin_password | quote }}
