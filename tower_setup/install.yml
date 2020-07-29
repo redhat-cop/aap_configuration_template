@@ -2,10 +2,10 @@
 # Playbook to deploy Ansible Tower
 
 - name: Install Tower
-  hosts: tower_control
+  hosts: tower_installer
   vars:
-    tower_hosts: "{{ groups.tower }}"
-    tower_database: "{{ groups.db.0 }}"
+    tower_hosts: "{{ tower_single_node | default(false) | ternary(['localhost ansible_connection=local'], groups.tower) }}"
+    tower_database: "{{ groups.db.0 | default('') }}"
   roles:
     - ansible-tower-install
 
