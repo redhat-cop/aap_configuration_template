@@ -6,6 +6,7 @@
   vars:
     tower_hosts: "{{ tower_single_node | default(false) | ternary(['localhost ansible_connection=local'], groups.tower) }}"
     tower_database: "{{ groups.db.0 | default('') }}"
+    tower_server: "https://{{ tower_single_node | default(false) | ternary('localhost', groups.tower.0) }}"
   roles:
     - ansible-tower-install
 
