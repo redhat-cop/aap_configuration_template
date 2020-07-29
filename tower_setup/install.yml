@@ -1,0 +1,15 @@
+---
+# Playbook to deploy Ansible Tower
+
+- name: Install Tower
+  hosts: tower_control
+  vars:
+    tower_hosts: "{{ groups.tower }}"
+    tower_database: "{{ groups.db.0 }}"
+  roles:
+    - ansible-tower-install
+
+- name: Add Tower Certs
+  hosts: tower
+  roles:
+    - ansible-tower-cert
