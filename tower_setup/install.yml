@@ -12,4 +12,4 @@
 - name: Add Tower Certs
   hosts: tower
   roles:
-    - ansible-tower-cert
+    - { role: ansible-tower-cert, tags: install_certs }
