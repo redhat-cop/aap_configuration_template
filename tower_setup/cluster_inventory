@@ -1,0 +1,16 @@
+[tower_installer]
+localhost
+
+[tower_installer:vars]
+tower_release_version="3.7.1-1"
+tower_admin_password="r3dh4t!"
+tower_cert_location="/var/tmp/tower.cert"
+tower_cert_location="/var/tmp/tower.key"
+
+[tower]
+tower1.example.com
+tower2.example.com
+tower3.example.com
+
+[db]
+towerpg1.example.com

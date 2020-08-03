@@ -1,0 +1,15 @@
+# Ignore PyCache and compiled python
+**/__pycache__/**
+*.pyc
+
+# ignore all logs
+*.log
+*.vscode
+
+# ignore all ansible retries
+*.retry
+
+# Ignore any included roles
+roles/*
+!roles/requirements.yml
+
