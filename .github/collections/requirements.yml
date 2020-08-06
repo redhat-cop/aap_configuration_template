@@ -1,4 +1,4 @@
 ---
 collections:
 - name: awx.awx
-- name: sean_m_sullivan.tower_configuration
+- name: redhat_cop.tower_configuration
