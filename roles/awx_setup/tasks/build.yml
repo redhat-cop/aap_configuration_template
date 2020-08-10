@@ -75,7 +75,7 @@
     networks:
       - name: "{{ tower_env }}_tower_net"
     state: started
-    
+
 - name: Setup awx_web container
   docker_container:
     name: "{{ tower_env }}_awx_web"
@@ -149,13 +149,12 @@
 ### Post build tasks
 - name: Wait for awx containers to be alive
   wait_for:
+    port: "{{ http_port }}"
     timeout: 20
-  when: awx_web_started.changed
 
 - name: Query AWX to begin migrations
   uri:
     url: "http://localhost:{{ http_port }}"
-  when: awx_web_started.changed
   register: awx_migrations_ran
 
 - name: Wait for AWX migrations to finish
