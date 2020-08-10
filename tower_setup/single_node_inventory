@@ -5,7 +5,7 @@ tower.example.com
 tower_release_version="3.7.1-1"
 tower_admin_password="r3dh4t!"
 tower_cert_location="/var/tmp/tower.cert"
-tower_cert_location="/var/tmp/tower.key"
+tower_cert_key_location="/var/tmp/tower.key"
 tower_single_node=true
 
 [tower]
