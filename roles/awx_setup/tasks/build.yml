@@ -1,0 +1,172 @@
+---
+# @author Anthony Loukinas <anthony.loukinas@redhat.com>
+
+### Pre build tasks
+- name: Create build directory
+  file:
+    path: "{{ playbook_dir }}/build"
+    state: directory
+
+- name: Create environment directory
+  file:
+    path: "{{ playbook_dir }}/build/{{ tower_env }}"
+    state: directory
+
+- name: Copy templates
+  template:
+    src: "{{ item }}.j2"
+    dest: "{{ playbook_dir }}/build/{{ tower_env }}/{{ item }}"
+    mode: 0600
+  loop:
+    - environment.sh
+    - credentials.py
+    - SECRET_KEY
+
+
+### Gather docker container images
+- name: Pull docker container image
+  docker_image:
+    name: "{{ item }}"
+    pull: yes
+    state: present
+  loop:
+    - "postgres:10"
+    - "memcached:alpine"
+    - "ansible/awx_rabbitmq:3.7.4"
+    - "ansible/awx_web:latest"
+    - "ansible/awx_task:latest"
+
+
+### Setup docker network
+- name: Create docker network
+  docker_network:
+    name: "{{ tower_env }}_tower_net"
+
+
+### Setup docker containers
+- name: Setup postgres 9.6 container
+  docker_container:
+    name: "{{ tower_env }}_postgres"
+    image: "postgres:9.6"
+    state: started
+    networks:
+      - name: "{{ tower_env }}_tower_net"
+    env:
+      POSTGRES_USER: "{{ pg_username }}"
+      POSTGRES_PASSWORD: "{{ pg_password }}"
+      POSTGRES_DB: "{{ pg_database }}"
+
+- name: Setup rabbitmq 3 container
+  docker_container:
+    name: "{{ tower_env }}_rabbitmq"
+    image: "rabbitmq:3"
+    state: started
+    networks:
+      - name: "{{ tower_env }}_tower_net"
+    env:
+      RABBITMQ_DEFAULT_VHOST: awx
+      RABBITMQ_DEFAULT_USER: "{{ rabbitmq_username }}"
+      RABBITMQ_DEFAULT_PASS: "{{ rabbitmq_password }}"
+
+- name: Setup memcached container
+  docker_container:
+    name: "{{ tower_env }}_memcached"
+    image: "memcached:alpine"
+    networks:
+      - name: "{{ tower_env }}_tower_net"
+    state: started
+
+- name: Setup awx_web container
+  docker_container:
+    name: "{{ tower_env }}_awx_web"
+    image: "ansible/awx_web:latest"
+    links:
+      - "{{ tower_env }}_rabbitmq"
+      - "{{ tower_env }}_memcached"
+      - "{{ tower_env }}_postgres"
+    ports:
+      - "{{ http_port }}:8052"
+    user: root
+    hostname: awxweb
+    networks:
+      - name: "{{ tower_env }}_tower_net"
+        aliases: "{{ tower_env.replace('_', '') }}awxweb"
+    volumes:
+      - "{{ playbook_dir }}/build/{{ tower_env }}/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "{{ playbook_dir }}/build/{{ tower_env }}/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "{{ playbook_dir }}/build/{{ tower_env }}/environment.sh:/etc/tower/conf.d/environment.sh"
+    env:
+      SECRET_KEY: "{{ secret_key }}"
+      DATABASE_USER: "{{ pg_username }}"
+      DATABASE_PASSWORD: "{{ pg_password }}"
+      DATABASE_NAME: "{{ pg_database }}"
+      DATABASE_PORT: "5432"
+      DATABASE_HOST: "{{ tower_env }}_postgres"
+      RABBITMQ_USER: "{{ rabbitmq_username }}"
+      RABBITMQ_PASSWORD: "{{ rabbitmq_password }}"
+      RABBITMQ_HOST: "{{ tower_env }}_rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_VHOST: awx
+      MEMCACHED_HOST: "{{ tower_env }}_memcached"
+      MEMCACHED_PORT: "11211"
+  register: awx_web_started
+
+- name: Setup awx_task container
+  docker_container:
+    name: "{{ tower_env }}_awx_task"
+    image: "ansible/awx_task:latest"
+    links:
+      - "{{ tower_env }}_rabbitmq"
+      - "{{ tower_env }}_memcached"
+      - "{{ tower_env }}_awx_web"
+      - "{{ tower_env }}_postgres"
+    user: root
+    # Hostname here is important
+    # https://github.com/ansible/awx/issues/86
+    hostname: awx
+    networks:
+      - name: "{{ tower_env }}_tower_net"
+    volumes:
+      - "{{ playbook_dir }}/build/{{ tower_env }}/SECRET_KEY:/etc/tower/SECRET_KEY"
+      - "{{ playbook_dir }}/build/{{ tower_env }}/credentials.py:/etc/tower/conf.d/credentials.py"
+      - "{{ playbook_dir }}/build/{{ tower_env }}/environment.sh:/etc/tower/conf.d/environment.sh"
+    env:
+      SECRET_KEY: "{{ secret_key }}"
+      DATABASE_USER: "{{ pg_username }}"
+      DATABASE_PASSWORD: "{{ pg_password }}"
+      DATABASE_NAME: "{{ pg_database }}"
+      DATABASE_PORT: "5432"
+      DATABASE_HOST: "{{ tower_env }}_postgres"
+      RABBITMQ_USER: "{{ rabbitmq_username }}"
+      RABBITMQ_PASSWORD: "{{ rabbitmq_password }}"
+      RABBITMQ_HOST: "{{ tower_env }}_rabbitmq"
+      RABBITMQ_PORT: "5672"
+      RABBITMQ_VHOST: awx
+      MEMCACHED_HOST: "{{ tower_env }}_memcached"
+      MEMCACHED_PORT: "11211"
+  register: awx_task_started
+
+### Post build tasks
+- name: Wait for awx containers to be alive
+  wait_for:
+    port: "{{ http_port }}"
+    timeout: 20
+
+- name: Query AWX to begin migrations
+  uri:
+    url: "http://localhost:{{ http_port }}"
+  register: awx_migrations_ran
+
+- name: Wait for AWX migrations to finish
+  wait_for:
+    timeout: 120
+  when: awx_migrations_ran.status == 200
+
+- name: Setup ping project
+  tower_project:
+    description: "Pings target host to ensure connectivity with Ansible"
+    name: "Ping"
+    organization: "Default"
+    scm_type: git
+    scm_url: "https://github.com/anthonyloukinas/ping.git"
+  when: awx_migrations_ran.status == 200

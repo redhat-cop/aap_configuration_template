@@ -1,0 +1,21 @@
+---
+# @author Anthony Loukinas <anthony.loukinas@redhat.com>
+
+tower_host: "http://localhost" # This might not be neccessary
+
+tower_env: "prod"
+
+# Install variables
+pg_username: awx
+pg_password: postgres
+pg_database: awx
+
+rabbitmq_username: awx
+rabbitmq_password: awx
+
+secret_key: test
+
+admin_password: password
+
+http_port: 80
+https_port: 443
