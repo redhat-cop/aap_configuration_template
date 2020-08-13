@@ -6,7 +6,7 @@
 ############################################################
 
 # Working location for installation files
-tower_working_location: "/root/"
+tower_working_location: "/var/tmp"
 
 # Tower variables
 tower_admin_password: "password"
