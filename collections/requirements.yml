@@ -1,0 +1,4 @@
+---
+collections:
+- name: redhat_cop.tower_utilities
+- name: redhat_cop.tower_configuration
