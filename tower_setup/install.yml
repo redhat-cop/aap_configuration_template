@@ -10,7 +10,7 @@
   collections:
     - redhat_cop.tower_utilities
   roles:
-    - tower_install
+    - install
 
 - name: Add Tower Certs
   hosts: tower
