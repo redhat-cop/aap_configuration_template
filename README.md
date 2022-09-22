@@ -23,7 +23,7 @@ vault_pass: 'the password to decrypt this vault'
 ...
 ```
 
-**_NOTE:_** Do not forget to update your inventory files replacing the `HERE` lines, if you do not have a `builder` server you can use `hub` for this.
+**_NOTE:_** Do not forget to update your inventory files replacing the `HERE` lines, if you do not have a `builder` server you can use `hub` for this. Also update `scm_url` in `group_vars/all/projects.yml` with your git URL.
 
 ## controller config
 
