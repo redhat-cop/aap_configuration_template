@@ -3,15 +3,6 @@
   hosts: builder
   gather_facts: false
   tasks:
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# remove this role when copying for your own code (see readme for more detail)
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-    - name: fixing loop issue
-      ansible.builtin.set_fact:
-        ah_collection: "{{ ah_collections }}"
-      when: custom_cop | default(false)
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     - name: include fix_collection role
       ansible.builtin.include_role:
         name: fix_collection
