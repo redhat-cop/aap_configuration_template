@@ -1,0 +1,14 @@
+---
+controller_projects_all:
+  - name: config_as_code
+    description: execution environments configurations
+    organization: config_as_code
+    scm_type: git
+    scm_url: https://gitlab.consulting.redhat.com/lab-automation/full_config.git
+    scm_branch: "{{ scm_branch }}"
+    scm_clean: true
+    scm_update_on_launch: true
+    scm_credential: gitlab-config_as_code
+    update_project: true
+    wait: true
+...

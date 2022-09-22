@@ -1,0 +1,9 @@
+---
+# ah_ee_namespaces:
+#   - name:
+#     append:
+#     groups:
+#       -
+#       -
+#     state: "{{ target_state }}"
+...

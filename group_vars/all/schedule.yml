@@ -1,0 +1,7 @@
+---
+controller_schedules_all:
+  - name: auto_run_controller_config
+    description: Auto run controller config once a day
+    unified_job_template: controller_config # NOTE: you cannot have the same job template name as a project or this will fail
+    rrule: "DTSTART:20191219T130551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
+...

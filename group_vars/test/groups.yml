@@ -1,0 +1,8 @@
+---
+# controller_groups_test:
+#   - name: group1
+#     inventory: localhost
+#     variables:
+#       some_var: some_val
+#       ansible_connection: local
+...

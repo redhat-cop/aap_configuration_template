@@ -1,0 +1,11 @@
+---
+controller_organizations_all:
+  - name: config_as_code
+    galaxy_credentials:
+      - ah_published
+      - ah_certified
+      - ah_community
+
+  - name: Default
+    state: absent
+...

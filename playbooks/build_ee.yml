@@ -1,0 +1,26 @@
+---
+- name: playbook to configure execution environments
+  hosts: builder
+  gather_facts: true
+  pre_tasks:
+    - name: validate that ansible-builder is installed on target system
+      block:
+        - name: try command
+          ansible.builtin.shell: ansible-builder --version
+          register: r_builder
+          changed_when: false
+      rescue:
+        - name: Install ansible-builder
+          ansible.builtin.dnf:
+            name:
+              - ansible-builder
+              - ansible-core
+            enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
+            state: present
+          become: true
+
+  tasks:
+    - name: include ee_builder role
+      ansible.builtin.include_role:
+        name: redhat_cop.ee_utilities.ee_builder
+...

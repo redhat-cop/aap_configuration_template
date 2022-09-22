@@ -1,0 +1,8 @@
+---
+ah_auto_approve: true
+ah_collections:
+  - collection_name: test
+    git_url: git@github.com:djdanielsson/test_collection.git
+    key_path: "{{ lookup('env', 'MY_CERT_FILE') }}"
+    ssh_opts: '-o StrictHostKeyChecking=no'
+...

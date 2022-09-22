@@ -1,0 +1,18 @@
+---
+- name: Playbook to configure ansible automation platform installation
+  hosts: all
+  vars_files:
+    - "../vaults/{{ env }}.yml"
+  tasks:
+    - name: include aap_setup_download role
+      ansible.builtin.include_role:
+        name: redhat_cop.aap_utilities.aap_setup_download
+
+    - name: include aap_setup_prepare role
+      ansible.builtin.include_role:
+        name: redhat_cop.aap_utilities.aap_setup_prepare
+
+    - name: include aap_setup_install role
+      ansible.builtin.include_role:
+        name: redhat_cop.aap_utilities.aap_setup_install
+...

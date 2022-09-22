@@ -1,0 +1,10 @@
+---
+controller_roles_all:
+  - team: config_as_code_admin
+    organization: config_as_code
+    role: execute
+
+  - user: api_user
+    team: config_as_code_admin
+    role: member
+...

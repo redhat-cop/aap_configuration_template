@@ -1,0 +1,27 @@
+---
+ah_namespaces:
+  - name: redhat_cop
+    company: Red Hat CoP
+    email: ddaniels@redhat.com
+    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+    description: Namespace to test changes in cop collections
+    resources: "# Redhat CoP\nA Namespace to test changes in cop collections"
+    links:
+      - name: "Red Hat"
+        url: "https://www.redhat.com"
+    # groups:
+    #   - name: system:partner-engineers
+    #     object_permissions:
+    #       - "change_namespace"
+    #       - "upload_to_namespace"
+
+  - name: community_test
+    company: Ansible by Red Hat
+    email: ddaniels@redhat.com
+    avatar_url: https://static.redhat.com/libs/redhat/brand-assets/latest/corp/logo.svg
+    description: Namespace to test publishing collections
+    resources: "# Redhat CoP\nA Namespace to test publishing collections"
+    links:
+      - name: "Red Hat"
+        url: "https://www.redhat.com"
+...

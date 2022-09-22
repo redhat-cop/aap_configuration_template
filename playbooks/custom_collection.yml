@@ -1,0 +1,43 @@
+---
+- name: publish custom collection
+  hosts: builder
+  gather_facts: false
+  tasks:
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# remove this role when copying for your own code (see readme for more detail)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+    - name: fixing loop issue
+      ansible.builtin.set_fact:
+        ah_collection: "{{ ah_collections }}"
+      when: custom_cop | default(false)
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    - name: include fix_collection role
+      ansible.builtin.include_role:
+        name: fix_collection
+      when: custom_cop
+      vars:
+        ah_collections: "{{ ah_collection + cop_list }}"
+        cop_list:
+          - collection_name: ah_configuration
+            git_url: https://github.com/redhat-cop/ah_configuration.git
+          - collection_name: controller_configuration
+            git_url: https://github.com/redhat-cop/controller_configuration.git
+          - collection_name: ee_utilities
+            git_url: https://github.com/redhat-cop/ee_utilities.git
+          - collection_name: aap_utilities
+            git_url: https://github.com/redhat-cop/aap_utilities.git
+
+    - name: include fix_collection role
+      ansible.builtin.include_role:
+        name: fix_collection
+      when: not custom_cop
+
+    - name: include namespace role
+      ansible.builtin.include_role:
+        name: redhat_cop.ah_configuration.namespace
+
+    - name: include publish role
+      ansible.builtin.include_role:
+        name: redhat_cop.ah_configuration.publish
+...

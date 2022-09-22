@@ -1,0 +1,13 @@
+---
+ee_list:
+  - ee_name: ee_tools
+    bindep:
+      - unzip
+    python:
+      - ansible-lint
+      - jmespath
+      - netaddr
+    collections:
+      - name: awx.awx
+      - name: redhat_cop.tower_utilities
+...

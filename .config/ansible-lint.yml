@@ -1,0 +1,46 @@
+---
+# Ansible Linter rules
+
+# Exclude paths from linter
+exclude_paths:
+  - '.config/'
+
+# Make output parsable
+parseable: true
+
+# Set output to quiet
+quiet: false
+
+# Path to rules dir
+# rulesdir:
+
+# Tags to skip
+skip_list:
+  - 'empty-string-compare' # Allow compare to empty string
+  - '204' # Allow string length greater than 160 chars
+  - 'no-changed-when' # False positives for running command shells
+  - 'command-instead-of-module' # Allow git commands for push, add, etc...
+  - 'command-instead-of-shell' # Allow use of shell when you want
+  - 'git-latest' # Allow for newest git version
+  - 'package-latest' # Allow newest package version
+  #- 'yaml' # skip yaml and check that with yaml lint itself
+
+# Tags to follow
+# tags:
+
+# Use rules
+use_default_rules: true
+enable_list:
+  # Comment out since this is a collection
+  # - fqcn-builtins  # opt-in
+  - 'no-log-password'  # opt-in
+
+warn_list:
+  - 'fqcn-builtins'
+  - 'ignore-errors'
+  - 'no-handler'
+  - 'risky-file-permissions'
+
+# Set verbosity
+verbosity: 1
+...

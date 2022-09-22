@@ -1,0 +1,26 @@
+---
+all:
+  children:
+    prod:
+      hosts:
+        172.0.0.1:
+      vars:
+        connection: local
+    automationcontroller:
+      hosts:
+        HERE:
+
+    automationhub:
+      hosts:
+        HERE:
+
+    builder:
+      hosts:
+        HERE:
+
+    database:
+      hosts:
+        HERE:
+  vars:
+    env: prod
+...

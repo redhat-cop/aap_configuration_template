@@ -1,0 +1,11 @@
+---
+#ee_base_image: quay.io/ansible/ansible-runner:latest
+#ee_builder_image: quay.io/ansible/ansible-builder:latest
+ee_image_push: true
+ee_validate_certs: false
+ee_create_ansible_config: false
+# ee_auth_file:
+# ee_executable:
+# ee_ca_cert_dir:
+# ee_sign_by:
+...
