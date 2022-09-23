@@ -1,4 +1,4 @@
 ---
-# controller_instance_groups_prod:
+controller_instance_groups_prod: []
 #   - name: test_instance_group
 ...

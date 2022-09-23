@@ -1,5 +1,5 @@
 ---
-# controller_notifications_dev:
+controller_notifications_dev: []
 #   - name: Email notification differential
 #     description: Send out emails for tower jobs
 #     organization: Default

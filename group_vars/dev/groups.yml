@@ -1,5 +1,5 @@
 ---
-# controller_groups_dev:
+controller_groups_dev: []
 #   - name: group1
 #     inventory: localhost
 #     variables:

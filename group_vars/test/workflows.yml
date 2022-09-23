@@ -1,5 +1,5 @@
 ---
-# controller_workflows_test:
+controller_workflows_test: []
 #   - name: Simple workflow schema
 #     description: a basic workflow
 #     extra_vars: {}
