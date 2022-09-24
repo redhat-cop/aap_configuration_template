@@ -8,7 +8,7 @@ controller_projects_all:
     scm_branch: "{{ scm_branch }}"
     scm_clean: true
     scm_update_on_launch: true
-    scm_credential: gitlab-config_as_code
+    scm_credential: ""
     update_project: true
     wait: true
 ...

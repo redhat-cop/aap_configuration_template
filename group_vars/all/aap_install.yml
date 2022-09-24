@@ -9,7 +9,7 @@ aap_setup_down_version: 2.2
 # aap_setup_prep_process_template: true
 aap_setup_prep_inv_nodes:
   automationcontroller: "{{ groups['automationcontroller'] }}"
-  database: "{{ groups['database'] }}"
+  database: "{{ groups['database'] | default(omit) }}"
   automationhub: "{{ groups['automationhub'] }}"
   # SSO: # not yet implemented
 aap_setup_prep_inv_vars:
