@@ -8,6 +8,5 @@ ah_api_user_pass: 'this will create and use this password can be generated'
 controller_api_user_pass: 'this will create and use this password can be generated'
 controller_pass: 'admin account pass for controller, if none is given it will default to Password1234!'
 ah_pass: 'hub admin account pass, if none is given it will default to Password1234!'
-ah_token_password: "{{ ah_api_user_pass }}"
 vault_pass: 'the password to decrypt this vault'
 ...
