@@ -13,11 +13,10 @@ offline_token: 'this is the one linked below about api token'
 rh_username: 'redhat user login (this is used to attach your subs to controller)'
 rh_password: 'password for redhat account'
 root_machine_pass: 'password for root user on builder (if not root user more changes will need to be made)'
-ah_api_user_pass: 'this will create and use this password can be generated'
+ah_token_password: 'this will create and use this password can be generated'
 controller_api_user_pass: 'this will create and use this password can be generated'
 controller_pass: 'admin account pass for controller, if none is given it will default to Password1234!'
 ah_pass: 'hub admin account pass, if none is given it will default to Password1234!'
-ah_api_user_pass: "{{ ah_api_user_pass }}"
 vault_pass: 'the password to decrypt this vault'
 ...
 ```
