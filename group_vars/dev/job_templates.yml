@@ -1,3 +1,21 @@
 ---
-controller_templates_dev: []
+controller_templates_dev:
+  - name: controller_config_dev
+    project: config_as_code_dev
+    job_type: run
+    playbook: playbooks/controller_config.yml
+    inventory: config_as_code_dev
+    execution_environment: supported
+    concurrent_jobs_enabled: false
+    ask_scm_branch_on_launch: true
+    ask_variables_on_launch: true
+    verbosity: 0
+    credentials:
+      - aap_admin
+      - ah_token_user
+      - vault
+    extra_vars:
+      # for debugging errors with creds change to false
+      controller_configuration_credentials_secure_logging: true
+
 ...

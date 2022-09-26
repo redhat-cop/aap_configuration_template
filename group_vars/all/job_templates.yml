@@ -5,31 +5,38 @@ controller_templates_all:
     job_type: run
     playbook: playbooks/controller_config.yml
     inventory: config_as_code
-    execution_environment: minimal
+    execution_environment: supported
     concurrent_jobs_enabled: false
+    ask_variables_on_launch: true
+    limit: "{{ env }}"
     verbosity: 0
     credentials:
       - aap_admin
       - ah_token_user
       - vault
+    extra_vars:
+      # for debugging errors with creds change to false
+      controller_configuration_credentials_secure_logging: true
 
   - name: ah_config
     project: config_as_code
     job_type: run
     playbook: playbooks/hub_config.yml
     inventory: config_as_code
-    execution_environment: minimal
+    execution_environment: supported
     concurrent_jobs_enabled: false
+    limit: "{{ env }}"
     verbosity: 0
     credentials:
       - ah_token_user
+      - vault
 
   - name: build_execution_environments
     project: config_as_code
     job_type: run
     playbook: playbooks/build_ee.yml
     inventory: config_as_code
-    execution_environment: minimal
+    execution_environment: supported
     concurrent_jobs_enabled: false
     verbosity: 0
     credentials:
@@ -43,12 +50,10 @@ controller_templates_all:
     job_type: run
     playbook: playbooks/custom_collection.yml
     inventory: config_as_code
-    execution_environment: minimal
+    execution_environment: supported
     concurrent_jobs_enabled: false
     verbosity: 0
     credentials:
       - root
       - ah_token_user
-    extra_vars:
-      custom_cop: true
 ...

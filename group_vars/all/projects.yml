@@ -7,7 +7,7 @@ controller_projects_all:
     scm_url: https://github.com/redhat-cop/aap_configuration_template.git
     scm_branch: "{{ scm_branch }}"
     scm_clean: true
-    scm_update_on_launch: true
+    scm_update_on_launch: false
     scm_credential: ""
     update_project: true
     wait: true

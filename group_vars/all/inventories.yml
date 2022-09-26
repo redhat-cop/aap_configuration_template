@@ -1,6 +1,6 @@
 ---
 controller_inventories_all:
   - name: config_as_code
-    description: inventory for configuring controller
+    description: inventory for configuring as
     organization: config_as_code
 ...

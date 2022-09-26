@@ -9,6 +9,6 @@ controller_inventory_sources_all:
     credential: ""
     overwrite: true
     overwrite_vars: true
-    update_on_launch: false
+    update_on_project_update: true
     update_cache_timeout: 0
 ...
