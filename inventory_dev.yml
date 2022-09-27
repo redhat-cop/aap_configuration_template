@@ -3,7 +3,7 @@ all:
   children:
     dev:
       hosts:
-        172.0.0.1:
+        127.0.0.1:
       vars:
         connection: local
     automationcontroller:
