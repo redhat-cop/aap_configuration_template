@@ -1,6 +1,7 @@
 ---
 ignore: |
-  .config/
+  '.github/'
+  'changelogs/'
 
 rules:
   braces:
@@ -28,7 +29,7 @@ rules:
     require-starting-space: true
     ignore-shebangs: true
     min-spaces-from-content: 1
-  comments-indentation: disable
+  comments-indentation: false
   document-end:
     present: true
   document-start:
@@ -44,9 +45,9 @@ rules:
     spaces: 2
     indent-sequences: true
     check-multi-line-strings: false
-  key-duplicates: enable
-  new-line-at-end-of-file: disable
+  key-duplicates: true
+  new-line-at-end-of-file: false
   new-lines:
     type: unix
-  trailing-spaces: enable
+  trailing-spaces: true
 ...

@@ -4,7 +4,6 @@
 # Exclude paths from linter
 exclude_paths:
   - '.github/'
-  - 'roles/master_role_example/'
   - 'changelogs/'
 
 # Make output parsable
@@ -30,7 +29,7 @@ skip_list:
 use_default_rules: true
 enable_list:
   # Comment out since this is a collection
-  - fqcn-builtins  # opt-in
+  - 'fqcn-builtins'  # opt-in
   - 'no-log-password'  # opt-in
 
 warn_list:
