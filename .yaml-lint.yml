@@ -46,7 +46,7 @@ rules:
     indent-sequences: true
     check-multi-line-strings: false
   key-duplicates: true
-  new-line-at-end-of-file: false
+  new-line-at-end-of-file: true
   new-lines:
     type: unix
   trailing-spaces: true
