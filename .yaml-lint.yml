@@ -50,4 +50,7 @@ rules:
   new-lines:
     type: unix
   trailing-spaces: true
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: true
 ...
