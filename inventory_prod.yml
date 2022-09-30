@@ -14,10 +14,12 @@ all:
       hosts:
         HERE:
 
+    # can be automationhub if you do not have a specific server for this
     builder:
       hosts:
         HERE:
 
+    # only needed if installing AAP with automation, can be removed if you are not
     database:
       hosts:
         HERE:

@@ -21,5 +21,5 @@ controller_teams: "{{ controller_teams_all + controller_teams_test }}"
 controller_user_accounts: "{{ controller_user_accounts_all + controller_user_accounts_test }}"
 controller_workflows: "{{ controller_workflows_all + controller_workflows_test }}"
 env: test
-scm_branch: # when you want it to be default branch just set to ""
+scm_branch: "" # when you want it to be default branch just set to ""
 ...
