@@ -6,6 +6,7 @@ exclude_paths:
   - '.github/'
   - 'changelogs/'
   - 'playbooks/install_configure.yml'
+  - 'aap_configuration_template/playbooks/install_configure.yml'
 
 # Make output parsable
 parseable: true
@@ -21,7 +22,7 @@ skip_list:
   - '204' # Allow string length greater than 160 chars
   - 'git-latest' # Allow for newest git version
   - 'package-latest' # Allow newest package version
-  - 'yaml' # skip yaml and check that with yaml lint itself
+#  - 'yaml' # skip yaml and check that with yaml lint itself
 
 # Tags to follow
 # tags:
@@ -29,7 +30,6 @@ skip_list:
 # Use rules
 use_default_rules: true
 enable_list:
-  # Comment out since this is a collection
   - 'fqcn-builtins'  # opt-in
   - 'no-log-password'  # opt-in
 
