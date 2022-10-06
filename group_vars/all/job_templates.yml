@@ -56,4 +56,15 @@ controller_templates_all:
     credentials:
       - root
       - ah_token_user
+
+  - name: console_token_refresh
+    project: config_as_code
+    job_type: run
+    playbook: playbooks/console_token_refresh.yml
+    inventory: config_as_code
+    execution_environment: minimal
+    concurrent_jobs_enabled: false
+    verbosity: 0
+    credentials:
+      - vault
 ...

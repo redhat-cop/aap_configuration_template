@@ -2,6 +2,8 @@
 - name: playbook to configure execution environments
   hosts: builder
   gather_facts: true
+  vars_files:
+    - "../vaults/{{ env }}.yml"
   pre_tasks:
     - name: validate that ansible-builder is installed on target system
       block:

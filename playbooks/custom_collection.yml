@@ -2,6 +2,8 @@
 - name: publish custom collection
   hosts: builder
   gather_facts: false
+  vars_files:
+    - "../vaults/{{ env }}.yml"
   tasks:
     - name: include namespace role
       ansible.builtin.include_role:
