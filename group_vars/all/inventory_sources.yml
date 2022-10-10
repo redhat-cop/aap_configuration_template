@@ -1,6 +1,6 @@
 ---
 controller_inventory_sources_all:
-  - name: controller_config_source
+  - name: config_as_code_source
     organization: config_as_code
     source: scm
     source_project: config_as_code
