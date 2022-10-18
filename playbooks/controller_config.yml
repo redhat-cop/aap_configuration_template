@@ -122,15 +122,15 @@
         name: redhat_cop.controller_configuration.credential_input_sources
       when: controller_credential_input_sources | length is not match('0')
 
-    - name: include organizations role
-      ansible.builtin.include_role:
-        name: redhat_cop.controller_configuration.organizations
-      when: controller_organizations | length is not match('0')
-
     - name: include execution_environments role
       ansible.builtin.include_role:
         name: redhat_cop.controller_configuration.execution_environments
       when: controller_execution_environments | length is not match('0')
+
+    - name: include organizations role
+      ansible.builtin.include_role:
+        name: redhat_cop.controller_configuration.organizations
+      when: controller_organizations | length is not match('0')
 
     - name: include projects role
       ansible.builtin.include_role:
