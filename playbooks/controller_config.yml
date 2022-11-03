@@ -10,25 +10,12 @@
         name: redhat_cop.controller_configuration.settings
       when: controller_settings | length is not match('0')
 
-    - name: create organizations without credentials
-      ansible.builtin.set_fact:
-        orgs_no_creds: "{{ orgs_no_creds | default([]) + [{ 'name' : item.name }] }}"
-      loop: "{{ controller_organizations }}"
-      when:
-        - controller_organizations | length is not match('0')
-        - (item.state | default('Present')) != 'absent'
-
-    - name: print out custom fact
-      ansible.builtin.debug:
-        var: orgs_no_creds
-        verbosity: 2
-
     - name: include organization role
       ansible.builtin.include_role:
         name: redhat_cop.controller_configuration.organizations
       vars:
-        controller_organizations: "{{ orgs_no_creds }}"
-      when: orgs_no_creds | length is not match('0')
+        assign_galaxy_credentials_to_org: false
+      when: controller_organizations | length is not match('0')
 
     - name: include labels role
       ansible.builtin.include_role:
@@ -80,7 +67,7 @@
             cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{ 'name' : item.name, 'state' : 'absent'}] }}"
           loop: "{{ _current_cred_types }}"
           vars:
-            _current_cred_types: "{{ lookup('awx.awx.tower_api', 'credential_types', query_params={ 'namespace__isnull': true } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
+            _current_cred_types: "{{ lookup('awx.awx.tower_api', 'credential_types', query_params={ 'managed': false } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 #            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={ 'namespace__isnull': true } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 
         - name: pulling credentials list
@@ -88,14 +75,12 @@
             cf_current_credentials: "{{ cf_current_credentials | default([]) + [{ 'name' : item.name, 'credential_type' : item.credential_type, 'state' : 'absent'}] }}"
           loop: "{{ _current_credentials }}"
           vars:
-            _current_credentials: "{{ lookup('awx.awx.tower_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
+            _current_credentials: "{{ lookup('awx.awx.tower_api', 'credentials', query_params={ 'managed': false }, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 #            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
 
-        - name: include credential_types role
+        - name: include credentials role
           ansible.builtin.include_role:
             name: redhat_cop.controller_configuration.credentials
-            apply:
-              ignore_errors: true # need to ignore errors because you cannot delete default ansible galaxy and container registry creds which will error
           vars:
             controller_credentials: "{{ cf_current_credentials }}"
             controller_configuration_credentials_secure_logging: false
