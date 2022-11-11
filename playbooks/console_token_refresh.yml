@@ -10,7 +10,7 @@
       ansible.builtin.uri:
         url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
         method: POST
-        return_content: True
+        return_content: true
         body_format: form-urlencoded
         headers:
           accept: application/json

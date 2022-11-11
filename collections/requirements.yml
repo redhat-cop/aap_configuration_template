@@ -5,5 +5,6 @@ collections:
   - name: redhat_cop.ee_utilities
   - name: redhat_cop.aap_utilities
   - name: containers.podman
+  - name: ansible.controller
   - name: awx.awx
 ...
