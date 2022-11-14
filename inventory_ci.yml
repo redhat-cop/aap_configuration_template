@@ -6,6 +6,31 @@ all:
         localhost:
       vars:
         connection: local
+    automationcontroller:
+      hosts:
+        localhost:
+      vars:
+        connection: local
+
+    automationhub:
+      hosts:
+        localhost:
+      vars:
+        connection: local
+
+    # can be automationhub if you do not have a specific server for this
+    builder:
+      hosts:
+        localhost:
+      vars:
+        connection: local
+
+    # only needed if installing AAP with automation, can be removed if you are not
+    database:
+      hosts:
+        localhost:
+      vars:
+        connection: local
   vars:
     env: dev
 ...
