@@ -79,5 +79,8 @@ jobs:
         run: ansible-galaxy collection install -r collections/requirements.yml
 
       - name: "Perform playbook tests"
+        run: ansible-playbook .github/test_playbook.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false
+
+      - name: "Perform playbook tests"
         run: ansible-playbook playbooks/controller_config.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false
 ...
