@@ -84,5 +84,5 @@ jobs:
           time: '300s'
 
       - name: "Perform playbook tests"
-        run: ansible-playbook playbooks/controller_config.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false
+        run: ansible-playbook playbooks/controller_config.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false -e ah_token=skip
 ...
