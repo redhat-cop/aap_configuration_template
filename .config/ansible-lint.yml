@@ -9,7 +9,6 @@ exclude_paths:
   - '.github/'
   - 'changelogs/'
   - 'playbooks/install_configure.yml'
-  - 'aap_configuration_template/playbooks/install_configure.yml'
 
 # Make output parsable
 parseable: true
