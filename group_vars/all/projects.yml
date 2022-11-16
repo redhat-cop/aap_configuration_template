@@ -1,7 +1,7 @@
 ---
 controller_projects_all:
   - name: config_as_code
-    description: execution environments configurations
+    description: config as code project
     organization: config_as_code
     scm_type: git
     scm_url: https://github.com/redhat-cop/aap_configuration_template.git
