@@ -6,6 +6,7 @@ all:
         localhost:
       vars:
         connection: local
+        controller_configuration_projects_async_retries: 90
     automationcontroller:
       hosts:
         172.0.0.1:
