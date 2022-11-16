@@ -5,7 +5,7 @@ controller_organizations_all:
       - ah_published
       - ah_certified
       - ah_community
-    default_environment: supported
+    # default_environment: supported
 
   - name: Default
     state: absent
