@@ -7,7 +7,6 @@ controller_templates_dev:
     inventory: config_as_code_dev
     execution_environment: supported
     concurrent_jobs_enabled: false
-    ask_scm_branch_on_launch: true
     ask_variables_on_launch: true
     verbosity: 0
     credentials:

@@ -6,7 +6,12 @@ all:
         localhost:
       vars:
         connection: local
-        controller_configuration_projects_async_retries: 300
+        controller_configuration_async_retries: 300
+        # assign_galaxy_credentials_to_org: false
+        controller_organizations:
+          - name: config_as_code
+            galaxy_credentials:
+              - Ansible Galaxy
     automationcontroller:
       hosts:
         172.0.0.1:
