@@ -28,7 +28,7 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: redhat_cop.ah_configuration
+title: aap_configuration_template
 trivial_section_name: trivial
 use_fqcn: true
 ...

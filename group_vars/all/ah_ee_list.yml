@@ -9,5 +9,5 @@ ee_list:
       - netaddr
     collections:
       - name: awx.awx
-      - name: redhat_cop.tower_utilities
+      - name: infra.tower_utilities
 ...

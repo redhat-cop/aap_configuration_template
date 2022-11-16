@@ -7,10 +7,10 @@ ah_repository_certified:
 
 ah_repository_community:
   requirements:
-    - redhat_cop.ah_configuration
-    - redhat_cop.controller_configuration
-    - redhat_cop.aap_utilities
-    - redhat_cop.ee_utilities
+    - infra.ah_configuration
+    - infra.controller_configuration
+    - infra.aap_utilities
+    - infra.ee_utilities
     - containers.podman
     - awx.awx
   wait: true

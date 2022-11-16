@@ -8,19 +8,19 @@
   tasks:
     - name: Include repository role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.repository
+        name: infra.ah_configuration.repository
 
     - name: Include repository sync role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.repository_sync
+        name: infra.ah_configuration.repository_sync
 
     - name: Include group role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.group
+        name: infra.ah_configuration.group
       when: ah_groups | length is not match('0')
 
     - name: Include user role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.user
+        name: infra.ah_configuration.user
       when: ah_users | length is not match('0')
 ...

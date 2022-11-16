@@ -7,9 +7,9 @@
   tasks:
     - name: Include namespace role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.namespace
+        name: infra.ah_configuration.namespace
 
     - name: Include publish role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.publish
+        name: infra.ah_configuration.publish
 ...
