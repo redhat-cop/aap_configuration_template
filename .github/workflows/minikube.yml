@@ -85,6 +85,9 @@ jobs:
       - name: Fix cloud cred token
         run: sed -i "s/{{ ah_token }}/${{ secrets.cloud_token }}/g" group_vars/all/credentials.yml
 
+      - name: Verify fixes
+        run: cat group_vars/all/organizations.yml; cat group_vars/all/credentials.yml
+
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r collections/requirements.yml
 
