@@ -75,14 +75,10 @@ jobs:
         run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
 
       - name: Fixing orgs
-        run: |
-             cat << EOD > group_vars/all/organizations.yml
-             controller_organizations_all:
-                - name: config_as_code
-                  galaxy_credentials:
-                    - ah_certified
-                    - Ansible Galaxy
-              EOD
+        run: echo -e "controller_organizations_all:\n\  - name:\ config_as_code\n    galaxy_credentials:\n      - ah_certified\n      - Ansible Galaxy" > group_vars/all/organizations.yml
+
+      - name: tests
+        run: cat group_vars/all/organizations.yml
 
       - name: Fix cloud cred
         run: sed -i "s/url\:\ \"https\:\/\/{{ ah_host }}\/api\/galaxy\/content\/rh-certified\/\"/url\:\ https\:\/\/console\.redhat\.com\/api\/automation-hub\/content\/5910538-synclist\//g" group_vars/all/credentials.yml
