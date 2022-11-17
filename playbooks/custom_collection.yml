@@ -1,15 +1,15 @@
 ---
-- name: publish custom collection
+- name: Publish custom collection
   hosts: builder
   gather_facts: false
   vars_files:
     - "../vaults/{{ env }}.yml"
   tasks:
-    - name: include namespace role
+    - name: Include namespace role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.namespace
+        name: infra.ah_configuration.namespace
 
-    - name: include publish role
+    - name: Include publish role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.publish
+        name: infra.ah_configuration.publish
 ...

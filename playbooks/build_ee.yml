@@ -1,13 +1,13 @@
 ---
-- name: playbook to configure execution environments
+- name: Playbook to configure execution environments
   hosts: builder
   gather_facts: true
   vars_files:
     - "../vaults/{{ env }}.yml"
   pre_tasks:
-    - name: validate that ansible-builder is installed on target system
+    - name: Validate that ansible-builder is installed on target system
       block:
-        - name: try command
+        - name: Try command
           ansible.builtin.shell: ansible-builder --version
           register: r_builder
           changed_when: false
@@ -22,7 +22,7 @@
           become: true
 
   tasks:
-    - name: include ee_builder role
+    - name: Include ee_builder role
       ansible.builtin.include_role:
-        name: redhat_cop.ee_utilities.ee_builder
+        name: infra.ee_utilities.ee_builder
 ...

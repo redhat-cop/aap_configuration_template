@@ -1,0 +1,38 @@
+---
+all:
+  children:
+    dev:
+      hosts:
+        localhost:
+      vars:
+        connection: local
+        controller_configuration_async_retries: 300
+        # assign_galaxy_credentials_to_org: false
+    automationcontroller:
+      hosts:
+        172.0.0.1:
+      vars:
+        connection: local
+
+    automationhub:
+      hosts:
+        172.0.0.1:
+      vars:
+        connection: local
+
+    # can be automationhub if you do not have a specific server for this
+    builder:
+      hosts:
+        172.0.0.1:
+      vars:
+        connection: local
+
+    # only needed if installing AAP with automation, can be removed if you are not
+    database:
+      hosts:
+        172.0.0.1:
+      vars:
+        connection: local
+  vars:
+    env: dev
+...

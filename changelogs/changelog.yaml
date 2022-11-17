@@ -1,0 +1,9 @@
+ancestor: null
+releases:
+  0.1.0:
+    changes:
+      major_changes:
+      - Initial release.
+    fragments:
+    - initial.yml
+    release_date: '2022-10-18'

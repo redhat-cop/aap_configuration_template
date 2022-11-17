@@ -1,9 +1,11 @@
 ---
 collections:
-  - name: redhat_cop.controller_configuration
-  - name: redhat_cop.ah_configuration
-  - name: redhat_cop.ee_utilities
-  - name: redhat_cop.aap_utilities
+  - name: infra.controller_configuration
+  - name: infra.ah_configuration
+  - name: infra.ee_utilities
+  - name: infra.aap_utilities
   - name: containers.podman
+  # Commented out until CI/CD can get fixed
+  # - name: ansible.controller
   - name: awx.awx
 ...

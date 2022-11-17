@@ -1,0 +1,98 @@
+---
+name: Run Test Playbooks Minikube
+
+on: [pull_request]
+
+jobs:
+  Integration-test:
+    name: Deploy Tower to Minikube and run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: "Install dependencies"
+        run: pip install -r .github/requirements.txt
+
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.4.2
+        with:
+          minikube version: 'v1.21.0'
+          kubernetes version: 'v1.20.7'
+          start args: '--addons=ingress'
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '20s'
+
+      - name: Setup awx operator
+        run: |
+          minikube kubectl create secret generic awx-admin-password -- --from-literal=password=password
+          minikube addons enable ingress
+          alias kubectl="minikube kubectl --"
+
+      - name: kustomize awx operator
+        working-directory: .github/workflow-config
+        run: kustomize build . | kubectl apply -f -
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '30s'
+
+      - name: kustomize awx
+        working-directory: .github/workflow-config/kube
+        run: kustomize build . | kubectl apply -f -
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '30s'
+
+      - name: Check service URL
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 10
+          max_attempts: 25
+          retry_wait_seconds: 30
+          command: minikube service awx-service --url
+
+      - name: minikube kubectl get pods
+        run: minikube kubectl get pods
+
+      - name: Set service url
+        run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url)'
+        id: service-url
+
+      - name: Display service url
+        run: echo "Service URL is ${{ steps.service-url.outputs.SERVICEURL }}"
+
+      - name: Display Versions
+        run: which python && pip --version && ansible --version
+
+      - name: Add cloud/galaxy tokens
+        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+
+      - name: Fixing orgs
+        run: echo -e "${{ secrets.fix_orgs }}" > group_vars/all/organizations.yml
+
+      # Doesn't appear to be working at this moment
+      - name: Fix cloud cred
+        run: sed -i "s/url\:\ \"https\:\/\/{{ ah_host }}\/api\/galaxy\/content\/rh-certified\/\"/url\:\ https\:\/\/console\.redhat\.com\/api\/automation-hub\/content\/5910538-synclist\//g" group_vars/all/credentials.yml
+
+      # Doesn't appear to be working at this moment
+      - name: Fix cloud cred token
+        run: sed -i "s/{{ ah_token }}/${{ secrets.cloud_token }}/g" group_vars/all/credentials.yml
+
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r collections/requirements.yml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '300s'
+
+      - name: "Perform playbook tests"
+        run: ansible-playbook playbooks/controller_config.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false -e ah_token=skip
+...

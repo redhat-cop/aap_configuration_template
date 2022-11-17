@@ -1,26 +1,26 @@
 ---
-- name: configure private automation hub after installation
+- name: Configure private automation hub after installation
   hosts: all
   gather_facts: false
   connection: local
   vars_files:
     - "../vaults/{{ env }}.yml"
   tasks:
-    - name: include repository role
+    - name: Include repository role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.repository
+        name: infra.ah_configuration.repository
 
-    - name: include repository sync role
+    - name: Include repository sync role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.repository_sync
+        name: infra.ah_configuration.repository_sync
 
-    - name: include group role
+    - name: Include group role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.group
+        name: infra.ah_configuration.group
       when: ah_groups | length is not match('0')
 
-    - name: include user role
+    - name: Include user role
       ansible.builtin.include_role:
-        name: redhat_cop.ah_configuration.user
+        name: infra.ah_configuration.user
       when: ah_users | length is not match('0')
 ...

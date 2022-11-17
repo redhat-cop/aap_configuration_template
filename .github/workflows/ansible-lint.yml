@@ -1,0 +1,25 @@
+---
+name: Ansible Lint # feel free to pick your own name
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Add cloud and galaxy tokens
+        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+      - name: Install ansible-lint
+        run: pip3 install ansible-core ansible-lint yamllint
+      - name: Install Collections
+        run: ansible-galaxy collection install -f -r collections/requirements.yml
+      - name: Lint Ansible Playbook
+        run: ansible-lint --profile=production
+      # - name: Run ansible-lint
+      #   uses: ansible-community/ansible-lint-action@main
+      #   # optional:
+      #   # with:
+      #   #   path: "playbooks/"  # <-- only one value is allowed
+...
