@@ -1,7 +1,7 @@
 ---
 name: Run Test Playbooks Minikube
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   Integration-test:
@@ -75,14 +75,6 @@ jobs:
       - name: Add cloud/galaxy tokens
         run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
 
-      - name: "Install Galaxy dependencies"
-        run: ansible-galaxy collection install -r collections/requirements.yml
-
-      - name: Wait / Sleep
-        uses: jakejarvis/wait-action@v0.1.0
-        with:
-          time: '300s'
-
       - name: Fixing orgs
         run: echo -e "${{ secrets.test_data }}" > group_vars/all/organizations.yml
 
@@ -92,8 +84,13 @@ jobs:
       - name: Fix cloud cred token
         run: sed -i "s/token\:\ \"{{ ah_token }}\"/token\:\ ${{ secrets.cloud_token }}/g" group_vars/all/credentials.yml
 
-      - name: Check
-        run: cat group_vars/all/credentials.yml
+      - name: "Install Galaxy dependencies"
+        run: ansible-galaxy collection install -r collections/requirements.yml
+
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.0
+        with:
+          time: '300s'
 
       - name: "Perform playbook tests"
         run: ansible-playbook playbooks/controller_config.yml -i inventory_ci.yml -l dev -e controller_host=${{ steps.service-url.outputs.SERVICEURL }} -e controller_pass=password -e validate_certs=false -e ah_token=skip
