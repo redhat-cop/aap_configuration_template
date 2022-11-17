@@ -1,7 +1,7 @@
 ---
 name: Run Test Playbooks Minikube
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   Integration-test:
