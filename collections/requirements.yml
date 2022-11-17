@@ -5,6 +5,7 @@ collections:
   - name: infra.ee_utilities
   - name: infra.aap_utilities
   - name: containers.podman
-  - name: ansible.controller
+  # Commented out until CI/CD can get fixed
+  # - name: ansible.controller
   - name: awx.awx
 ...

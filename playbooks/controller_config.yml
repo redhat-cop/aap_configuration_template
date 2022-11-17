@@ -67,7 +67,9 @@
             cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{'name': item['name'], 'state': 'absent'}] }}"
           loop: "{{ _current_cred_types }}"
           vars:
-            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+            _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+            # Commented out until CI/CD can get fixed
+            # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
             _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
 
         - name: Pulling credentials list
@@ -75,7 +77,9 @@
             cf_current_credentials: "{{ cf_current_credentials | default([]) + [{'name': item['name'], 'credential_type': item['credential_type'], 'state': 'absent'}] }}"
           loop: "{{ _current_credentials }}"
           vars:
-            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+            _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+            # Commented out until CI/CD can get fixed
+            # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
             _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
 
         - name: Include credentials role
