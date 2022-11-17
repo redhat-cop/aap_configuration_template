@@ -5,6 +5,6 @@ collections:
   - name: infra.ee_utilities
   - name: infra.aap_utilities
   - name: containers.podman
-  # - name: ansible.controller
+  - name: ansible.controller
   - name: awx.awx
 ...

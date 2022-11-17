@@ -75,16 +75,16 @@ jobs:
         run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
 
       - name: Fixing orgs
-        run: echo -e "controller_organizations_all:\n\  - name:\ config_as_code\n    galaxy_credentials:\n      - ah_certified\n      - Ansible Galaxy" > group_vars/all/organizations.yml
-
-      - name: tests
-        run: cat group_vars/all/organizations.yml
+        run: echo -e "${{ secrets.test_data }}" > group_vars/all/organizations.yml
 
       - name: Fix cloud cred
         run: sed -i "s/url\:\ \"https\:\/\/{{ ah_host }}\/api\/galaxy\/content\/rh-certified\/\"/url\:\ https\:\/\/console\.redhat\.com\/api\/automation-hub\/content\/5910538-synclist\//g" group_vars/all/credentials.yml
 
       - name: Fix cloud cred token
-        run: sed -i "s/token\:\ \"{{ ah_token }}\"/token\:\ ${{ secrets.cloud_token }}/g" group_vars/all/credentials.yml
+        run: sed -i "s/{{ ah_token }}/${{ secrets.cloud_token }}/g" group_vars/all/credentials.yml
+
+      - name: tests
+        run: cat group_vars/all/credentials.yml
 
       - name: "Install Galaxy dependencies"
         run: ansible-galaxy collection install -r collections/requirements.yml
