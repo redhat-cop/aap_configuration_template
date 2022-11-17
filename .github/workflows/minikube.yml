@@ -80,9 +80,8 @@ jobs:
              controller_organizations_all:
                 - name: config_as_code
                   galaxy_credentials:
-                    - ah_published
                     - ah_certified
-                    - ah_community
+                    - Ansible Galaxy
               EOD
 
       - name: Fix cloud cred
