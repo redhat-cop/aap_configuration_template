@@ -12,14 +12,23 @@
           register: r_builder
           changed_when: false
       rescue:
-        - name: Install ansible-builder
-          ansible.builtin.dnf:
-            name:
-              - ansible-builder
-              - ansible-core
-            enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
-            state: present
-          become: true
+        - name: Try to install with rpms
+          block:
+            - name: Install ansible-builder from rpm
+              ansible.builtin.dnf:
+                name:
+                  - ansible-builder
+                  - ansible-core
+                enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
+                state: present
+              become: true
+          rescue:
+            - name: Install ansible-builder from pip
+              ansible.builtin.pip:
+                name:
+                  - ansible-builder
+                  - ansible-core
+                state: latest
 
   tasks:
     - name: Include ee_builder role

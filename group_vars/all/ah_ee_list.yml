@@ -1,13 +1,18 @@
 ---
 ee_list:
-  - ee_name: ee_tools
+  - ee_name: config_as_code_ee
     bindep:
       - unzip
     python:
       - ansible-lint
-      - jmespath
       - netaddr
     collections:
+      - name: infra.controller_configuration
+      - name: infra.ah_configuration
+      - name: infra.ee_utilities
+      - name: infra.aap_utilities
       - name: awx.awx
-      - name: infra.tower_utilities
+    append:
+      - RUN dnf update -y
+      # - RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
 ...
