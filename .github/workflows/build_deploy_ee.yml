@@ -1,0 +1,24 @@
+---
+name: Ansible Builder # feel free to pick your own name
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Add cloud and galaxy tokens
+        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+      - name: Install ansible and builder
+        run: pip3 install ansible-core ansible-builder
+      - name: Install Collections
+        run: ansible-galaxy collection install -f -r collections/requirements.yml
+      - name: Docker login
+        run: docker login -u="${{ secrets.quay_username }}+github_action" -p="${{ secrets.quay_token }}" quay.io
+      - name: Run Ansible Playbook
+        run: ansible-playbook playbooks/build_ee.yml -i inventory_ci.yml -l dev -e "ee_registry_username=${{ secrets.quay_username }}+github_action" -e "ee_registry_password=${{ secrets.quay_token }}" --connection=local -e "ee_registry_dest=quay.io/${{ secrets.quay_username }}/config_as_code_ee" -vvv
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
+...

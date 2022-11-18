@@ -8,6 +8,7 @@ all:
         connection: local
         controller_configuration_async_retries: 300
         # assign_galaxy_credentials_to_org: false
+
     automationcontroller:
       hosts:
         172.0.0.1:
@@ -23,7 +24,7 @@ all:
     # can be automationhub if you do not have a specific server for this
     builder:
       hosts:
-        172.0.0.1:
+        localhost:
       vars:
         connection: local
 
