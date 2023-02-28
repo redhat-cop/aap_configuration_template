@@ -54,50 +54,51 @@
           when: r_ah_token['changed']
        # what needs to be done to guarantee this to work?
 
-    - name: Update credentials
-      block:
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
-          when: controller_credential_types | length is not match('0')
+    # This block/rescue section can be useful if you get a lot of cred errors to try and auto fix
+    # - name: Update credentials
+    #   block:
+    - name: Include credential_types role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.credential_types
+      when: controller_credential_types | length is not match('0')
 
-      rescue:
-        - name: Pulling credential_types list
-          ansible.builtin.set_fact:
-            cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{'name': item['name'], 'state': 'absent'}] }}"
-          loop: "{{ _current_cred_types }}"
-          vars:
-            _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-            # Commented out until CI/CD can get fixed
-            # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-            _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
+    #   rescue:
+    #     - name: Pulling credential_types list
+    #       ansible.builtin.set_fact:
+    #         cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{'name': item['name'], 'state': 'absent'}] }}"
+    #       loop: "{{ _current_cred_types }}"
+    #       vars:
+    #         _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+    #         # Commented out until CI/CD can get fixed
+    #         # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+    #         _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
 
-        - name: Pulling credentials list
-          ansible.builtin.set_fact:
-            cf_current_credentials: "{{ cf_current_credentials | default([]) + [{'name': item['name'], 'credential_type': item['credential_type'], 'state': 'absent'}] }}"
-          loop: "{{ _current_credentials }}"
-          vars:
-            _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-            # Commented out until CI/CD can get fixed
-            # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-            _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
+    #     - name: Pulling credentials list
+    #       ansible.builtin.set_fact:
+    #         cf_current_credentials: "{{ cf_current_credentials | default([]) + [{'name': item['name'], 'credential_type': item['credential_type'], 'state': 'absent'}] }}"
+    #       loop: "{{ _current_credentials }}"
+    #       vars:
+    #         _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+    #         # Commented out until CI/CD can get fixed
+    #         # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
+    #         _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
 
-        - name: Include credentials role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credentials
-          vars:
-            controller_credentials: "{{ cf_current_credentials }}"
-            controller_configuration_credentials_secure_logging: false
+    #     - name: Include credentials role
+    #       ansible.builtin.include_role:
+    #         name: infra.controller_configuration.credentials
+    #       vars:
+    #         controller_credentials: "{{ cf_current_credentials }}"
+    #         controller_configuration_credentials_secure_logging: false
 
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
-          vars:
-            controller_credential_types: "{{ cf_current_credential_types }}"
+    #     - name: Include credential_types role
+    #       ansible.builtin.include_role:
+    #         name: infra.controller_configuration.credential_types
+    #       vars:
+    #         controller_credential_types: "{{ cf_current_credential_types }}"
 
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
+    #     - name: Include credential_types role
+    #       ansible.builtin.include_role:
+    #         name: infra.controller_configuration.credential_types
 
     - name: Include credential role
       ansible.builtin.include_role:
@@ -110,6 +111,11 @@
       ansible.builtin.include_role:
         name: infra.controller_configuration.credential_input_sources
       when: controller_credential_input_sources | length is not match('0')
+
+    - name: Include instance_groups role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.instance_groups
+      when: controller_instance_groups | length is not match('0')
 
     - name: Include execution_environments role
       ansible.builtin.include_role:
@@ -144,6 +150,11 @@
       ansible.builtin.include_role:
         name: infra.controller_configuration.groups
       when: controller_groups | length is not match('0')
+
+    - name: Include hosts role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.hosts
+      when: controller_hosts | length is not match('0')
 
     - name: Include applications role
       ansible.builtin.include_role:
