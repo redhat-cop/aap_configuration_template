@@ -1,6 +1,6 @@
 ---
 ee_list:
-  - ee_name: config_as_code_ee
+  - name: config_as_code_ee
     bindep:
       - unzip
     python:

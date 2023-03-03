@@ -1,6 +1,7 @@
 ---
 - name: Publish custom collection
-  hosts: builder
+  hosts: all
+  connection: local
   gather_facts: false
   vars_files:
     - "../vaults/{{ env }}.yml"

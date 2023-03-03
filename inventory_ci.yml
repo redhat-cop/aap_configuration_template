@@ -11,13 +11,13 @@ all:
 
     automationcontroller:
       hosts:
-        172.0.0.1:
+        127.0.0.1:
       vars:
         connection: local
 
     automationhub:
       hosts:
-        172.0.0.1:
+        127.0.0.1:
       vars:
         connection: local
 
@@ -31,7 +31,7 @@ all:
     # only needed if installing AAP with automation, can be removed if you are not
     database:
       hosts:
-        172.0.0.1:
+        127.0.0.1:
       vars:
         connection: local
   vars:
