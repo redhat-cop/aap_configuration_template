@@ -1,0 +1,13 @@
+---
+major_changes:
+  - updating ee_list to use name instead of the old ee_name.
+
+minor_changes:
+  - added limits to build_custom_collections and console_token_refresh JTs
+  - updated install_configure playbook to match linting guidelines
+  - fixed typos of 172.0.0.1 to the correct 127.0.0.1
+  - added a block section to hub_config to also do custom collections
+  - updated custom_collection playbook to run locally vs remote host
+  - commented out vault file from build_ee playbook because I don't think it should be needed most of the time, leaving in case people do
+  - commented out block/rescue section in controller_config because probably causes more issues then fixes
+...

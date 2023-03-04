@@ -52,6 +52,7 @@ controller_templates_all:
     inventory: config_as_code
     execution_environment: supported
     concurrent_jobs_enabled: false
+    limit: "{{ env }}"
     verbosity: 0
     credentials:
       - root
@@ -64,6 +65,7 @@ controller_templates_all:
     inventory: config_as_code
     execution_environment: minimal
     concurrent_jobs_enabled: false
+    limit: "{{ env }}"
     verbosity: 0
     credentials:
       - vault

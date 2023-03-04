@@ -14,6 +14,17 @@
       ansible.builtin.include_role:
         name: infra.ah_configuration.repository_sync
 
+    - name: Publish custom collections
+      when: publish | default(false)
+      block:
+        - name: Include namespace role
+          ansible.builtin.include_role:
+            name: infra.ah_configuration.namespace
+
+        - name: Include publish role
+          ansible.builtin.include_role:
+            name: infra.ah_configuration.publish
+
     - name: Include group role
       ansible.builtin.include_role:
         name: infra.ah_configuration.group
