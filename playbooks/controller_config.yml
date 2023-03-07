@@ -35,7 +35,8 @@
         name: infra.controller_configuration.teams
       when: controller_teams | length is not match('0')
 
-   # probably not optimal but works, looking for better solutions
+   # probably not good but kinda works, looking for better solutions,
+   # you are better off removing this block and getting token into vault by hand
     - name: Figuring out AH token
       when: ah_token is not defined or ah_token['token'] is defined
       block:
@@ -50,7 +51,7 @@
 
         - name: Fixing format
           ansible.builtin.set_fact:
-            ah_token: "{{ ah_token['token'] }}"
+            ah_token: "{{ r_ah_token['token'] }}"
           when: r_ah_token['changed']
        # what needs to be done to guarantee this to work?
 
