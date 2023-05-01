@@ -3,8 +3,56 @@
   hosts: all
   vars_files:
     - "../vaults/{{ env }}.yml"
+    - "../vars/main.yml"
   connection: local
   tasks:
+    - name: Include all vars from org directories
+      ansible.builtin.include_vars:
+        dir: "../vars/{{ item }}{{ env }}"
+        ignore_unknown_extensions: true
+        name: "{{ item }}"
+      loop: "{{ org_directories }}"
+
+    # probably not optimal but works, looking for better solutions
+    - name: Figuring out AH token
+      when: ah_token is not defined or ah_token['token'] is defined
+      block:
+        - name: Authenticate and get an API token from Automation Hub
+          infra.ah_configuration.ah_token:
+            ah_host: "{{ ah_host | default(groups['automationhub'][0]) }}"
+            ah_username: "{{ ah_token_username | default('admin') }}"
+            ah_password: "{{ ah_token_password }}"
+            ah_path_prefix: 'galaxy' # this is for private automation hub
+            validate_certs: false
+          register: r_ah_token
+
+        - name: Fixing format
+          ansible.builtin.set_fact:
+            ah_token: "{{ ah_token['token'] }}"
+          when: r_ah_token['changed']
+          # what needs to be done to guarantee this to work?
+
+    - name: Compose complete vars
+      ansible.builtin.set_fact:
+        controller_credential_input_sources: "{{ controller_credential_input_sources | default([]) + org_var['controller_credential_input_sources'] }}"
+        controller_credentials: "{{ controller_credentials | default([]) + org_var['controller_credentials'] }}"
+        controller_groups: "{{ controller_groups | default([]) + org_var['controller_groups'] }}"
+        controller_hosts: "{{ controller_hosts | default([]) + org_var['controller_hosts'] }}"
+        controller_inventories: "{{ controller_inventories | default([]) + org_var['controller_inventories'] }}"
+        controller_inventory_sources: "{{ controller_inventory_sources | default([]) + org_var['controller_inventory_sources'] }}"
+        controller_templates: "{{ controller_templates | default([]) + org_var['controller_templates'] }}"
+        controller_labels: "{{ controller_labels | default([]) + org_var['controller_labels'] }}"
+        controller_notifications: "{{ controller_notifications | default([]) + org_var['controller_notifications'] }}"
+        controller_projects: "{{ controller_projects | default([]) + org_var['controller_projects'] }}"
+        controller_schedules: "{{ controller_schedules | default([]) + org_var['controller_schedules'] }}"
+        controller_workflows: "{{ controller_workflows | default([]) + org_var['controller_workflows'] }}"
+        controller_roles: "{{ controller_roles | default([]) + [ {'team': org_var['team_name'], 'role': 'update', 'projects': project_names } ] }}"
+      loop: "{{ org_directories }}"
+      no_log: true
+      vars:
+        org_var: "{{ lookup('vars', item) }}"
+        project_names: "[ {% for project in org_var['controller_projects'] %}'{{ project['name'] }}'{{ ',' if not loop.last else '' }}{% endfor %} ]"
+
     - name: Include setting role
       ansible.builtin.include_role:
         name: infra.controller_configuration.settings
@@ -35,71 +83,10 @@
         name: infra.controller_configuration.teams
       when: controller_teams | length is not match('0')
 
-   # probably not good but kinda works, looking for better solutions,
-   # you are better off removing this block and getting token into vault by hand
-    - name: Figuring out AH token
-      when: ah_token is not defined or ah_token['token'] is defined
-      block:
-        - name: Authenticate and get an API token from Automation Hub
-          infra.ah_configuration.ah_token:
-            ah_host: "{{ ah_host | default(groups['automationhub'][0]) }}"
-            ah_username: "{{ ah_token_username | default('admin') }}"
-            ah_password: "{{ ah_token_password }}"
-            ah_path_prefix: 'galaxy' # this is for private automation hub
-            validate_certs: false
-          register: r_ah_token
-
-        - name: Fixing format
-          ansible.builtin.set_fact:
-            ah_token: "{{ r_ah_token['token'] }}"
-          when: r_ah_token['changed']
-       # what needs to be done to guarantee this to work?
-
-    # This block/rescue section can be useful if you get a lot of cred errors to try and auto fix
-    # - name: Update credentials
-    #   block:
     - name: Include credential_types role
       ansible.builtin.include_role:
         name: infra.controller_configuration.credential_types
       when: controller_credential_types | length is not match('0')
-
-    #   rescue:
-    #     - name: Pulling credential_types list
-    #       ansible.builtin.set_fact:
-    #         cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{'name': item['name'], 'state': 'absent'}] }}"
-    #       loop: "{{ _current_cred_types }}"
-    #       vars:
-    #         _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-    #         # Commented out until CI/CD can get fixed
-    #         # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={'namespace__isnull': true}, host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-    #         _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
-
-    #     - name: Pulling credentials list
-    #       ansible.builtin.set_fact:
-    #         cf_current_credentials: "{{ cf_current_credentials | default([]) + [{'name': item['name'], 'credential_type': item['credential_type'], 'state': 'absent'}] }}"
-    #       loop: "{{ _current_credentials }}"
-    #       vars:
-    #         _current_cred_types: "{{ lookup('awx.awx.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-    #         # Commented out until CI/CD can get fixed
-    #         # _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=_controller_validate_certs) }}"
-    #         _controller_validate_certs: "{{ controller_validate_certs | default(true) }}"
-
-    #     - name: Include credentials role
-    #       ansible.builtin.include_role:
-    #         name: infra.controller_configuration.credentials
-    #       vars:
-    #         controller_credentials: "{{ cf_current_credentials }}"
-    #         controller_configuration_credentials_secure_logging: false
-
-    #     - name: Include credential_types role
-    #       ansible.builtin.include_role:
-    #         name: infra.controller_configuration.credential_types
-    #       vars:
-    #         controller_credential_types: "{{ cf_current_credential_types }}"
-
-    #     - name: Include credential_types role
-    #       ansible.builtin.include_role:
-    #         name: infra.controller_configuration.credential_types
 
     - name: Include credential role
       ansible.builtin.include_role:
