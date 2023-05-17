@@ -51,7 +51,7 @@
 
         - name: Fixing format
           ansible.builtin.set_fact:
-            ah_token: "{{ r_ah_token['token'] }}"
+            ah_token: "{{ ah_token['token'] }}"
           when: r_ah_token['changed']
        # what needs to be done to guarantee this to work?
 
