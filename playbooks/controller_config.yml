@@ -52,7 +52,7 @@
         - name: Fixing format
           ansible.builtin.set_fact:
             ah_token: "{{ ah_token['token'] }}"
-          when: r_ah_token['changed']
+          when: r_ah_token['changed'] # noqa: no-handler
        # what needs to be done to guarantee this to work?
 
     - name: Include credential_types role
