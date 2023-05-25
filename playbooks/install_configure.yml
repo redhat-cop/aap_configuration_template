@@ -261,14 +261,6 @@
         name: infra.controller_configuration.roles
       when: controller_roles | length is not match('0')
 
-    # - name: Launch build custom collection job template
-    #   awx.awx.job_launch:
-    #     name: build_custom_collections
-    #     controller_host:     "{{ controller_hostname }}"
-    #     controller_username: "{{ controller_username }}"
-    #     controller_password: "{{ controller_password }}"
-    #     validate_certs:      "{{ controller_validate_certs }}"
-
     - name: Launch build execution environment job template
       awx.awx.job_launch:
         name: build_execution_environments
@@ -277,64 +269,4 @@
         controller_password: "{{ controller_password }}"
         validate_certs:      "{{ controller_validate_certs }}"
 
-# - name: Publish custom collection
-#   hosts: "{{ env }}"
-#   gather_facts: false
-#   vars:
-#     custom_cop: true
-#   tasks:
-#     # remove this role when copying for your own code (see readme for more detail)
-#     - name: fixing loop issue
-#       ansible.builtin.set_fact:
-#         ah_collection: "{{ ah_collections }}"
-#       when: custom_cop | default(false)
-
-#     - name: Include fix_collection role
-#       ansible.builtin.include_role:
-#         name: fix_collection
-#       when: custom_cop
-#       vars:
-#         ah_collections: "{{ ah_collection + cop_list }}"
-#         cop_list:
-#           - collection_name: ah_configuration
-#             git_url: https://github.com/redhat-cop/ah_configuration.git
-#           - collection_name: controller_configuration
-#             git_url: https://github.com/redhat-cop/controller_configuration.git
-#           - collection_name: ee_utilities
-#             git_url: https://github.com/redhat-cop/ee_utilities.git
-#           - collection_name: aap_utilities
-#             git_url: https://github.com/redhat-cop/aap_utilities.git
-
-#     - name: Include namespace role
-#       ansible.builtin.include_role:
-#         name: infra.ah_configuration.namespace
-
-#     - name: Include publish role
-#       ansible.builtin.include_role:
-#         name: infra.ah_configuration.publish
-
-# - name: Playbook to configure execution environments
-#   hosts: "{{ env }}"
-#   gather_facts: true
-#   pre_tasks:
-#     - name: validate that ansible-builder is installed on target system
-#       block:
-#         - name: try command
-#           ansible.builtin.shell: ansible-builder --version
-#           register: r_builder
-#           changed_when: false
-#       rescue:
-#         - name: Install ansible-builder
-#           ansible.builtin.dnf:
-#             name:
-#               - ansible-builder
-#               - ansible-core
-#             enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
-#             state: present
-#           become: true
-
-#   tasks:
-#     - name: Include ee_builder role
-#       ansible.builtin.include_role:
-#         name: infra.ee_utilities.ee_builder
 ...
