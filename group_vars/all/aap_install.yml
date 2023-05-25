@@ -1,6 +1,7 @@
 ---
 aap_setup_down_offline_token: "{{ offline_token }}"
-aap_setup_down_version: 2.2
+aap_setup_down_version: 2.3
+aap_setup_rhel_version: 8
 # aap_setup_down_dest_dir: /tmp/
 # aap_setup_down_type: setup # default is bundle
 
