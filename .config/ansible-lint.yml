@@ -6,7 +6,7 @@ mock_modules:
 # Exclude paths from linter
 exclude_paths:
   - '${PWD}/.github/'
-  - '${PWD}/changelogs/'
+  - '${PWD}/changelogs/*'
   # - '${PWD}/playbooks/install_configure.yml'
 
 # Ansible Linter rules
