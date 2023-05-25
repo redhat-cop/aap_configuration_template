@@ -80,7 +80,7 @@
         controller_password: "{{ controller_password }}"
         validate_certs: false
 
-        - name: Include setting role
+    - name: Include setting role
       ansible.builtin.include_role:
         name: infra.controller_configuration.settings
       when: controller_settings | length is not match('0')
