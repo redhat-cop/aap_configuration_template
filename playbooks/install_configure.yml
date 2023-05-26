@@ -1,6 +1,6 @@
 ---
-- name: Playbook to configure ansible automation platform installation
-  hosts: "{{ env }}"
+- name: Deploy Ansible Automation Platform
+  hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   connection: local
   vars_files:
     - "../vaults/{{ env }}.yml"
@@ -18,7 +18,7 @@
         name: infra.aap_utilities.aap_setup_install
 
 - name: Configure private automation hub after installation
-  hosts: "{{ env }}"
+  hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   gather_facts: false
   connection: local
   vars_files:
@@ -32,13 +32,16 @@
       ansible.builtin.include_role:
         name: infra.ah_configuration.repository_sync
 
-    - name: Include namespace role
-      ansible.builtin.include_role:
-        name: infra.ah_configuration.namespace
+    - name: Publish custom collections
+      when: publish | default(false)
+      block:
+        - name: Include namespace role
+          ansible.builtin.include_role:
+            name: infra.ah_configuration.namespace
 
-    - name: Include publish role
-      ansible.builtin.include_role:
-        name: infra.ah_configuration.publish
+        - name: Include publish role
+          ansible.builtin.include_role:
+            name: infra.ah_configuration.publish
 
     - name: Include group role
       ansible.builtin.include_role:
@@ -50,8 +53,8 @@
         name: infra.ah_configuration.user
       when: ah_users | length is not match('0')
 
-- name: Playbook to configure ansible controller post installation
-  hosts: "{{ env }}"
+- name: Configure ansible controller post installation
+  hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   vars_files:
     - "../vaults/{{ env }}.yml"
   connection: local
@@ -82,25 +85,13 @@
         name: infra.controller_configuration.settings
       when: controller_settings | length is not match('0')
 
-    - name: Create organizations without credentials
-      ansible.builtin.set_fact:
-        orgs_no_creds: "{{ orgs_no_creds | default([]) + [{ 'name' : item.name }] }}"
-      loop: "{{ controller_organizations }}"
-      when:
-        - controller_organizations | length is not match('0')
-        - (item.state | default('Present')) != 'absent'
-
-    - name: Print out custom fact
-      ansible.builtin.debug:
-        var: orgs_no_creds
-        verbosity: 2
-
     - name: Include organization role
       ansible.builtin.include_role:
         name: infra.controller_configuration.organizations
       vars:
-        controller_organizations: "{{ orgs_no_creds }}"
-      when: orgs_no_creds | length is not match('0')
+        assign_galaxy_credentials_to_org: false
+        assign_default_ee_to_org: false
+      when: controller_organizations | length is not match('0')
 
     - name: Include labels role
       ansible.builtin.include_role:
@@ -119,8 +110,10 @@
         name: infra.controller_configuration.teams
       when: controller_teams | length is not match('0')
 
-   # probably not optimal but works, looking for better solutions
+   # probably not good but kinda works, looking for better solutions,
+   # you are better off removing this block and getting token into vault by hand
     - name: Figuring out AH token
+      when: ah_token is not defined or ah_token['token'] is defined
       block:
         - name: Authenticate and get an API token from Automation Hub
           infra.ah_configuration.ah_token:
@@ -133,54 +126,14 @@
 
         - name: Fixing format
           ansible.builtin.set_fact:
-            ah_token: "{{ r_ah_token['token'] }}"
-          when: r_ah_token['changed']
+            ah_token: "{{ ah_token['token'] }}"
+          when: r_ah_token['changed'] # noqa: no-handler
        # what needs to be done to guarantee this to work?
-#      rescue:
-      when: ah_token is not defined or ah_token['token'] | length is not match('0')
 
-    - name: Update credentials
-      block:
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
-          when: controller_credential_types | length is not match('0')
-
-      rescue:
-        - name: Pulling credential_types list
-          ansible.builtin.set_fact:
-            cf_current_credential_types: "{{ cf_current_credential_types | default([]) + [{ 'name' : item.name, 'state' : 'absent'}] }}"
-          loop: "{{ _current_cred_types }}"
-          vars:
-            _current_cred_types: "{{ lookup('awx.awx.tower_api', 'credential_types', query_params={ 'namespace__isnull': true } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
-#            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credential_types', query_params={ 'namespace__isnull': true } ,host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
-
-        - name: Pulling credentials list
-          ansible.builtin.set_fact:
-            cf_current_credentials: "{{ cf_current_credentials | default([]) + [{ 'name' : item.name, 'credential_type' : item.credential_type, 'state' : 'absent'}] }}"
-          loop: "{{ _current_credentials }}"
-          vars:
-            _current_credentials: "{{ lookup('awx.awx.tower_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
-#            _current_cred_types: "{{ lookup('ansible.controller.controller_api', 'credentials', host=controller_hostname, username=controller_username, password=controller_password, verify_ssl=controller_validate_certs) }}"
-
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credentials
-            apply:
-              ignore_errors: true # need to ignore errors because you cannot delete default ansible galaxy and container registry creds which will error
-          vars:
-            controller_credentials: "{{ cf_current_credentials }}"
-            controller_configuration_credentials_secure_logging: false
-
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
-          vars:
-            controller_credential_types: "{{ cf_current_credential_types }}"
-
-        - name: Include credential_types role
-          ansible.builtin.include_role:
-            name: infra.controller_configuration.credential_types
+    - name: Include credential_types role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.credential_types
+      when: controller_credential_types | length is not match('0')
 
     - name: Include credential role
       ansible.builtin.include_role:
@@ -194,15 +147,20 @@
         name: infra.controller_configuration.credential_input_sources
       when: controller_credential_input_sources | length is not match('0')
 
-    - name: Include organizations role
+    - name: Include instance_groups role
       ansible.builtin.include_role:
-        name: infra.controller_configuration.organizations
-      when: controller_organizations | length is not match('0')
+        name: infra.controller_configuration.instance_groups
+      when: controller_instance_groups | length is not match('0')
 
     - name: Include execution_environments role
       ansible.builtin.include_role:
         name: infra.controller_configuration.execution_environments
       when: controller_execution_environments | length is not match('0')
+
+    - name: Include organizations role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.organizations
+      when: controller_organizations | length is not match('0')
 
     - name: Include projects role
       ansible.builtin.include_role:
@@ -227,6 +185,11 @@
       ansible.builtin.include_role:
         name: infra.controller_configuration.groups
       when: controller_groups | length is not match('0')
+
+    - name: Include hosts role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.hosts
+      when: controller_hosts | length is not match('0')
 
     - name: Include applications role
       ansible.builtin.include_role:
@@ -258,14 +221,6 @@
         name: infra.controller_configuration.roles
       when: controller_roles | length is not match('0')
 
-    # - name: Launch build custom collection job template
-    #   awx.awx.job_launch:
-    #     name: build_custom_collections
-    #     controller_host:     "{{ controller_hostname }}"
-    #     controller_username: "{{ controller_username }}"
-    #     controller_password: "{{ controller_password }}"
-    #     validate_certs:      "{{ controller_validate_certs }}"
-
     - name: Launch build execution environment job template
       awx.awx.job_launch:
         name: build_execution_environments
@@ -274,64 +229,4 @@
         controller_password: "{{ controller_password }}"
         validate_certs:      "{{ controller_validate_certs }}"
 
-# - name: Publish custom collection
-#   hosts: "{{ env }}"
-#   gather_facts: false
-#   vars:
-#     custom_cop: true
-#   tasks:
-#     # remove this role when copying for your own code (see readme for more detail)
-#     - name: fixing loop issue
-#       ansible.builtin.set_fact:
-#         ah_collection: "{{ ah_collections }}"
-#       when: custom_cop | default(false)
-
-#     - name: Include fix_collection role
-#       ansible.builtin.include_role:
-#         name: fix_collection
-#       when: custom_cop
-#       vars:
-#         ah_collections: "{{ ah_collection + cop_list }}"
-#         cop_list:
-#           - collection_name: ah_configuration
-#             git_url: https://github.com/redhat-cop/ah_configuration.git
-#           - collection_name: controller_configuration
-#             git_url: https://github.com/redhat-cop/controller_configuration.git
-#           - collection_name: ee_utilities
-#             git_url: https://github.com/redhat-cop/ee_utilities.git
-#           - collection_name: aap_utilities
-#             git_url: https://github.com/redhat-cop/aap_utilities.git
-
-#     - name: Include namespace role
-#       ansible.builtin.include_role:
-#         name: infra.ah_configuration.namespace
-
-#     - name: Include publish role
-#       ansible.builtin.include_role:
-#         name: infra.ah_configuration.publish
-
-# - name: Playbook to configure execution environments
-#   hosts: "{{ env }}"
-#   gather_facts: true
-#   pre_tasks:
-#     - name: validate that ansible-builder is installed on target system
-#       block:
-#         - name: try command
-#           ansible.builtin.shell: ansible-builder --version
-#           register: r_builder
-#           changed_when: false
-#       rescue:
-#         - name: Install ansible-builder
-#           ansible.builtin.dnf:
-#             name:
-#               - ansible-builder
-#               - ansible-core
-#             enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
-#             state: present
-#           become: true
-
-#   tasks:
-#     - name: Include ee_builder role
-#       ansible.builtin.include_role:
-#         name: infra.ee_utilities.ee_builder
 ...
