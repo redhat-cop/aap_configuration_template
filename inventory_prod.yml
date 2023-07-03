@@ -8,17 +8,17 @@ all:
         connection: local
     automationcontroller:
       hosts:
-        HERE: # FQDN of Automation Controller host 
+        HERE: # FQDN of Automation Controller host(s) 
 
     automationhub:
       hosts:
-        HERE: # FQDN of Automation Hub host. Can be commented out if not in use.
+        HERE: # FQDN of Automation Hub host(s). Can be commented out if not in use.
 
     builder:
       hosts:
-        HERE: # FQDN of builder server if you have one. Otherwise, can be Automation Hub FQDN or commented out if not in use.
+        HERE: # FQDN of builder host if you have one. Otherwise, can be Automation Hub host or commented out if not in use.
 
-    # only needed if installing AAP with automation, can be removed if you are not. See Install docs if unsure what server should be the database host.
+    # Only needed if installing AAP with automation, can be removed if you are not. See Install docs if unsure what server should be the database host.
     database:
       hosts:
         HERE:

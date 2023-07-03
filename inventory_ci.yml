@@ -28,7 +28,7 @@ all:
       vars:
         connection: local
 
-    # only needed if installing AAP with automation, can be removed if you are not
+    # Only needed if installing AAP with automation, can be removed if you are not. See Install docs if unsure what server should be the database host.
     database:
       hosts:
         127.0.0.1:
