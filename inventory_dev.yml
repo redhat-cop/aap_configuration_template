@@ -8,7 +8,7 @@ all:
         connection: local
     automationcontroller:
       hosts:
-        HERE: # FQDN of Automation Controller host(s) 
+        HERE: # FQDN of Automation Controller host(s)
 
     automationhub:
       hosts:

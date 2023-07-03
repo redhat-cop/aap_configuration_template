@@ -5,8 +5,8 @@ mock_modules:
 
 # Exclude paths from linter
 exclude_paths:
-  - '${PWD}/.github/'
-  - '${PWD}/changelogs/*'
+  - '.github/'
+  - 'changelogs/*'
   # - '${PWD}/playbooks/install_configure.yml'
 
 # Ansible Linter rules
@@ -19,7 +19,7 @@ warn_list:  # or 'skip_list' to silence them completely
   - git-latest # Allow for newest git version
   - package-latest # Allow newest package version
   - risky-file-permissions  # File permissions unset or incorrect.
-  - risky-shell-pipe  # Shells that use pipes should set the pipefail option.
   - template-instead-of-copy  # Templated files should use template instead of copy
   - command-instead-of-shell  # Use shell only when shell functionality is required.
+  - var-naming[no-role-prefix] # Because I don't want to follow this rule at this time
 ...
