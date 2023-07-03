@@ -1,5 +1,0 @@
----
-# This list should match the name of the repository, as well as the suffix on the variables in that repository.
-org_directories:
-  - aap_cac_network
-...
