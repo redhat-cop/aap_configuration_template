@@ -2,7 +2,7 @@
 
 This is a combination of all the Red Hat CoP Config as Code collections to deploy and configure AAP. This is built for multi environment (meaning multiple AAP instances/clusters). If you want an object across all environments put it in the correct file/list under the all group. If there is a specific object for only one environment then put it under that environments folder[^1].
 
-[^1]: If you only have/want one environment you could delete dev/test/prod folders in group_vars and remove all the _all added to vars in all group.
+[^1]: If you only have/want one environment you could delete dev/test/prod folders in group_vars and remove all the _all added to vars in all group. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
 
 You will need to replace the vault files with your own with these variables:
 
@@ -22,17 +22,6 @@ vault_pass: 'the password to decrypt this vault'
 ```
 
 **_NOTE:_** Do not forget to update your inventory files replacing the `HERE` lines, if you do not have a `builder` server you can use `hub` for this. Also update `scm_url` in `group_vars/all/projects.yml` with your git URL.
-
-## To add a new submodule org repo
-
-from the root of the base CAC project directory, run:
-
-```console
-git submodule add git@github.com:seansackowitz/aap_cac_network.git vars/aap_cac_network --branch main
-```
-
-And then add the name of the repo to org_directories in the `vars/main.yml` file.
-see [example org repo](https://github.com/seansackowitz/aap_cac_organization_vars)
 
 ## Redhat Communities of Practice Configuration Collections Suite
 
