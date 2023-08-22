@@ -8,7 +8,7 @@
     - name: Validate that ansible-builder is installed on target system
       block:
         - name: Try command
-          ansible.builtin.shell: ansible-builder --version
+          ansible.builtin.command: ansible-builder --version
           register: r_builder
           changed_when: false
       rescue:

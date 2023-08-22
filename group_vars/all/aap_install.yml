@@ -10,6 +10,7 @@ aap_setup_rhel_version: 8
 # aap_setup_prep_process_template: true
 aap_setup_prep_inv_nodes:
   automationcontroller: "{{ groups['automationcontroller'] }}"
+  automationedacontroller: "{{ groups['automationedacontroller'] }}"
   database: "{{ groups['database'] | default(omit) }}"
   automationhub: "{{ groups['automationhub'] }}"
   # SSO: # not yet implemented
@@ -46,6 +47,14 @@ aap_setup_prep_inv_vars:
     automationhub_pg_sslmode: 'prefer'  # set to 'verify-full' for client-side enforced SSL
     # sso_keystore_password: "{{ ansible_password | default('Password1234!') }}"
     # automationhub_main_url: 'https://automationhub.ansible.com'
+    automationedacontroller_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    automationedacontroller_pg_host: "{{ aap_db_host | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    automationedacontroller_pg_port: '5432'
+    automationedacontroller_pg_database: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    automationedacontroller_pg_username: 'automationedacontroller'
+    automationedacontroller_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    # automation_controller_main_url = ''
+    # automationedacontroller_controller_verify_ssl = true
     postgres_use_ssl: false
     # postgres_ssl_cert: /path/to/pgsql.crt
     # postgres_ssl_key: /path/to/pgsql.key
