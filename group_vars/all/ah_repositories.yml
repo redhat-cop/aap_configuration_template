@@ -1,38 +1,22 @@
 ---
-ah_repository_certified:
-  token: "{{ cloud_token }}"
-  url: 'https://console.redhat.com/api/automation-hub/content/published/'
-  auth_url: 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
-  wait: true
-
-ah_repository_community:
-  requirements:
-    - infra.ah_configuration
-    - infra.controller_configuration
-    - infra.aap_utilities
-    - infra.ee_utilities
-    - containers.podman
-    - awx.awx
-  wait: true
-
-# ah_repositories:
-#   - name: rh-certified
-#     token: "{{ cloud_token }}"
-#     url: 'https://console.redhat.com/api/automation-hub/content/published/'
-#     auth_url: 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
-#     wait: true
-#   - name: validated
-#     token: "{{ cloud_token }}"
-#     url: 'https://console.redhat.com/api/automation-hub/content/validated/'
-#     auth_url: 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
-#     wait: true
-#   - name: community
-#     requirements:
-#       - infra.ah_configuration
-#       - infra.controller_configuration
-#       - infra.aap_utilities
-#       - infra.ee_utilities
-#       - containers.podman
-#       - awx.awx
-#     wait: true
+ah_repositories:
+  - name: rh-certified
+    token: "{{ cloud_token }}"
+    url: 'https://console.redhat.com/api/automation-hub/content/published/'
+    auth_url: 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
+    wait: true
+  - name: validated
+    token: "{{ cloud_token }}"
+    url: 'https://console.redhat.com/api/automation-hub/content/validated/'
+    auth_url: 'https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token'
+    wait: true
+  - name: community
+    requirements:
+      - infra.ah_configuration
+      - infra.controller_configuration
+      - infra.aap_utilities
+      - infra.ee_utilities
+      - containers.podman
+      - awx.awx
+    wait: true
 ...
