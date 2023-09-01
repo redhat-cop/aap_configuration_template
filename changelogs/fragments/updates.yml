@@ -15,3 +15,4 @@ minor_changes:
   - commented out vault file from build_ee playbook because I don't think it should be needed most of the time, leaving in case people do
   - commented out block/rescue section in controller_config because probably causes more issues then fixes
 ...
+
