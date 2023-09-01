@@ -19,11 +19,11 @@
                 name:
                   - ansible-builder
                   - ansible-core
-                enablerepo: ansible-automation-platform-2.2-for-rhel-8-x86_64-rpms
+                enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
                 state: present
               become: true
           rescue:
-            - name: Install ansible-builder from pip
+            - name: Install ansible-builder from pip # noqa package-latest
               ansible.builtin.pip:
                 name:
                   - ansible-builder
