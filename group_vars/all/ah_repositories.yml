@@ -29,4 +29,5 @@ ah_collection_repositories:
   - name: validated
     remote: validated
   - name: community
-    remote: community
+    remote: community 
+...
