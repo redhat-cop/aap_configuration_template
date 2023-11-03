@@ -1,18 +1,21 @@
 ---
 ee_list:
   - name: config_as_code_ee
-    bindep:
-      - unzip
-    python:
-      - ansible-lint
-      - netaddr
-    collections:
-      - name: infra.controller_configuration
-      - name: infra.ah_configuration
-      - name: infra.ee_utilities
-      - name: infra.aap_utilities
-      - name: awx.awx
-    append:
-      - RUN dnf update -y
-      # - RUN pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+    dependencies:
+      system:
+        - unzip
+      python:
+        - ansible-lint
+        - jmespath
+        - netaddr
+      galaxy:
+        collections:
+           - infra.controller_configuration
+           - infra.ah_configuration
+           - infra.ee_utilities
+           - infra.aap_utilities
+           - awx.awx
+    build_steps:
+      append_final:
+        - RUN dnf update -y
 ...
