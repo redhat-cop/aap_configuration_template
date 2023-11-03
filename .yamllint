@@ -45,11 +45,11 @@ rules:
     spaces: 2
     indent-sequences: true
     check-multi-line-strings: false
-  key-duplicates: true
-  new-line-at-end-of-file: true
+  key-duplicates: enable
+  new-line-at-end-of-file: enable
   new-lines:
     type: unix
-  trailing-spaces: true
+  trailing-spaces: {}
   truthy:
     allowed-values: ['true', 'false']
     check-keys: true

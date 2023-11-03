@@ -10,11 +10,11 @@ ee_list:
         - netaddr
       galaxy:
         collections:
-           - infra.controller_configuration
-           - infra.ah_configuration
-           - infra.ee_utilities
-           - infra.aap_utilities
-           - awx.awx
+          - infra.controller_configuration
+          - infra.ah_configuration
+          - infra.ee_utilities
+          - infra.aap_utilities
+          - awx.awx
     build_steps:
       append_final:
         - RUN dnf update -y

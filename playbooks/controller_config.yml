@@ -2,7 +2,7 @@
 - name: Playbook to configure ansible controller post installation
   hosts: all
   vars_files:
-    - "../vaults/{{ env }}.yml"
+    - ../vaults/{{ env }}.yml
   connection: local
   tasks:
     - name: Include setting role
@@ -35,8 +35,8 @@
         name: infra.controller_configuration.teams
       when: controller_teams | length is not match('0')
 
-   # probably not good but kinda works, looking for better solutions,
-   # you are better off removing this block and getting token into vault by hand
+    # probably not good but kinda works, looking for better solutions,
+    # you are better off removing this block and getting token into vault by hand
     - name: Figuring out AH token
       when: ah_token is not defined or ah_token['token'] is defined
       block:
@@ -45,7 +45,7 @@
             ah_host: "{{ ah_host | default(groups['automationhub'][0]) }}"
             ah_username: "{{ ah_token_username | default('admin') }}"
             ah_password: "{{ ah_token_password }}"
-            ah_path_prefix: 'galaxy' # this is for private automation hub
+            ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
           register: r_ah_token
 
@@ -53,7 +53,7 @@
           ansible.builtin.set_fact:
             ah_token: "{{ ah_token['token'] }}"
           when: r_ah_token['changed'] # noqa: no-handler
-       # what needs to be done to guarantee this to work?
+    # what needs to be done to guarantee this to work?
 
     - name: Include credential_types role
       ansible.builtin.include_role:

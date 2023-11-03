@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - "../vaults/{{ env }}.yml"
+    - ../vaults/{{ env }}.yml
   tasks:
     - name: Refresh token
       ansible.builtin.uri:

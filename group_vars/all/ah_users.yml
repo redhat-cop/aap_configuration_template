@@ -8,5 +8,5 @@ ah_users:
     append: true
     is_superuser: true
     password: "{{ ah_token_password }}"
-    state: "present"
+    state: present
 ...

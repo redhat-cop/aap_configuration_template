@@ -1,8 +1,3 @@
 ---
 controller_groups_dev: []
-#   - name: group1
-#     inventory: localhost
-#     variables:
-#       some_var: some_val
-#       ansible_connection: local
 ...
