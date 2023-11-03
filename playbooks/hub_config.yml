@@ -4,7 +4,7 @@
   gather_facts: false
   connection: local
   vars_files:
-    - "../vaults/{{ env }}.yml"
+    - ../vaults/{{ env }}.yml
   tasks:
     - name: Include collection_remote role
       ansible.builtin.include_role:
@@ -38,4 +38,3 @@
       ansible.builtin.include_role:
         name: infra.ah_configuration.user
       when: ah_users | length is not match('0')
-...

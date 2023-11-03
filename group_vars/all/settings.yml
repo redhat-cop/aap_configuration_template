@@ -2,4 +2,3 @@
 controller_settings_all:
   settings:
     GALAXY_IGNORE_CERTS: true
-...

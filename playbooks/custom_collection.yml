@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - "../vaults/{{ env }}.yml"
+    - ../vaults/{{ env }}.yml
   tasks:
     - name: Include namespace role
       ansible.builtin.include_role:
@@ -13,4 +13,3 @@
     - name: Include publish role
       ansible.builtin.include_role:
         name: infra.ah_configuration.publish
-...

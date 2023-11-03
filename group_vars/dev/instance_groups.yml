@@ -1,4 +1,2 @@
 ---
 controller_instance_groups_dev: []
-#   - name: test_instance_group
-...

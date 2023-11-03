@@ -16,5 +16,3 @@ controller_templates_dev:
     extra_vars:
       # for debugging errors with creds change to false
       controller_configuration_credentials_secure_logging: true
-
-...

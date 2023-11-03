@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars_files:
-    - "../vaults/{{ env }}.yml"
+    - ../vaults/{{ env }}.yml
   tasks:
     - name: Refresh token
       ansible.builtin.uri:
@@ -19,4 +19,3 @@
           client_id: cloud-services
           refresh_token: "{{ cloud_token }}"
       no_log: true
-...

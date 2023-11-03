@@ -20,6 +20,5 @@ controller_settings: "{{ controller_settings_all | combine(controller_settings_p
 controller_teams: "{{ controller_teams_all + controller_teams_prod }}"
 controller_user_accounts: "{{ controller_user_accounts_all + controller_user_accounts_prod }}"
 controller_workflows: "{{ controller_workflows_all + controller_workflows_prod }}"
-env: "prod"
+env: prod
 scm_branch: "" # when you want it to be default branch just set to ""
-...

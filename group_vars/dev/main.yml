@@ -22,4 +22,3 @@ controller_user_accounts: "{{ controller_user_accounts_all + controller_user_acc
 controller_workflows: "{{ controller_workflows_all + controller_workflows_dev }}"
 env: dev
 scm_branch: "" # when you want it to be default branch just set to ""
-...

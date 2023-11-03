@@ -7,6 +7,5 @@ ah_namespaces:
     description: Namespace to test publishing collections
     resources: "# Redhat CoP\nA Namespace to test publishing collections"
     links:
-      - name: "Red Hat"
-        url: "https://www.redhat.com"
-...
+      - name: Red Hat
+        url: https://www.redhat.com

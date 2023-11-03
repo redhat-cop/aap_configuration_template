@@ -11,4 +11,3 @@ controller_projects_dev:
     scm_credential: ""
     update_project: true
     wait: true
-...

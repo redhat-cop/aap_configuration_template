@@ -8,4 +8,3 @@ ee_create_ansible_config: false
 # ee_executable:
 # ee_ca_cert_dir:
 # ee_sign_by:
-...
