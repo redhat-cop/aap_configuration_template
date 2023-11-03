@@ -6,13 +6,17 @@
   vars_files:
     - "../vaults/{{ env }}.yml"
   tasks:
-    - name: Include repository role
+    - name: Include collection_remote role
       ansible.builtin.include_role:
-        name: infra.ah_configuration.repository
+        name: infra.ah_configuration.collection_remote
 
-    - name: Include repository sync role
+    - name: Include collection_repository role
       ansible.builtin.include_role:
-        name: infra.ah_configuration.repository_sync
+        name: infra.ah_configuration.collection_repository
+
+    - name: Include collection_repository_sync role
+      ansible.builtin.include_role:
+        name: infra.ah_configuration.collection_repository_sync
 
     - name: Publish custom collections
       when: publish | default(false)
