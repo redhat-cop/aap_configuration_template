@@ -2,5 +2,5 @@
 controller_user_accounts_all:
   - user: api_user
     is_superuser: false
-    password: '{{ controller_api_user_pass }}'
+    password: "{{ controller_api_user_pass }}"
 ...

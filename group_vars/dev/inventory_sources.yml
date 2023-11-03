@@ -4,7 +4,7 @@ controller_inventory_sources_dev:
     organization: config_as_code
     source: scm
     source_project: config_as_code_dev
-    source_path: "inventory_{{ env }}.yml"
+    source_path: inventory_{{ env }}.yml
     inventory: config_as_code_dev
     credential: ""
     overwrite: true

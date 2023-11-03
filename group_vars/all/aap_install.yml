@@ -26,10 +26,10 @@ aap_setup_prep_inv_vars:
     # web_server_ssl_key: /path/to/tower.key
     pg_password: "{{ ansible_password | default('Password1234!') }}"
     pg_host: "{{ aap_db_host | default(aap_setup_prep_inv_nodes['database'][0]) }}"
-    pg_port: '5432'
-    pg_database: 'awx'
-    pg_username: 'awx'
-    pg_sslmode: 'prefer'  # set to 'verify-full' for client-side enforced SSL
+    pg_port: "5432"
+    pg_database: awx
+    pg_username: awx
+    pg_sslmode: prefer # set to 'verify-full' for client-side enforced SSL
     automationhub_admin_password: "{{ ansible_password | default('Password1234!') }}"
     # automationhub_importer_settings: ""
     automationhub_require_content_approval: true
@@ -40,18 +40,18 @@ aap_setup_prep_inv_vars:
     # automationhub_ssl_key: ""
     # automationhub_backup_collections: ""
     automationhub_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
-    automationhub_pg_port: '5432'
-    automationhub_pg_database: 'automationhub'
-    automationhub_pg_username: 'automationhub'
+    automationhub_pg_port: "5432"
+    automationhub_pg_database: automationhub
+    automationhub_pg_username: automationhub
     automationhub_pg_password: "{{ ansible_password | default('Password1234!') }}"
-    automationhub_pg_sslmode: 'prefer'  # set to 'verify-full' for client-side enforced SSL
+    automationhub_pg_sslmode: prefer # set to 'verify-full' for client-side enforced SSL
     # sso_keystore_password: "{{ ansible_password | default('Password1234!') }}"
     # automationhub_main_url: 'https://automationhub.ansible.com'
     automationedacontroller_admin_password: "{{ ansible_password | default('Password1234!') }}"
     automationedacontroller_pg_host: "{{ aap_db_host | default(aap_setup_prep_inv_nodes['database'][0]) }}"
-    automationedacontroller_pg_port: '5432'
+    automationedacontroller_pg_port: "5432"
     automationedacontroller_pg_database: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
-    automationedacontroller_pg_username: 'automationedacontroller'
+    automationedacontroller_pg_username: automationedacontroller
     automationedacontroller_pg_password: "{{ ansible_password | default('Password1234!') }}"
     # automation_controller_main_url = ''
     # automationedacontroller_controller_verify_ssl = true

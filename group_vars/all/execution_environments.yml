@@ -1,16 +1,16 @@
 ---
 controller_execution_environments_all:
-  - name: "supported"
+  - name: supported
     image: "{{ ah_host }}/ee-supported-rhel8"
     pull: always
     credential: cr_ah
 
-  - name: "minimal"
+  - name: minimal
     image: "{{ ah_host }}/ee-minimal-rhel8"
     pull: always
     credential: cr_ah
 
-  - name: "old_29_ee"
+  - name: old_29_ee
     image: "{{ ah_host }}/ee-29-rhel8"
     pull: always
     credential: cr_ah
