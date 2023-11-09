@@ -23,15 +23,44 @@ vault_pass: 'the password to decrypt this vault'
 
 **_NOTE:_** Do not forget to update your inventory files replacing the `HERE` lines, if you do not have a `builder` server you can use `hub` for this. Also update `scm_url` in `group_vars/all/projects.yml` with your git URL.
 
-## Redhat Communities of Practice Configuration Collections Suite
+## Getting Help
 
-|Collection Name|Purpose|
-|:---:|:---:|
-|[Controller Configuration](https://galaxy.ansible.com/redhat_cop/controller_configuration)|Automation controller configuration|
-|[Hub Configuration](https://galaxy.ansible.com/redhat_cop/ah_configuration)|Automation hub configuration|
-|[EE Utilities](https://galaxy.ansible.com/redhat_cop/ee_utilities)|Execution Environment creation utilities|
-|[AAP installation Utilities](https://galaxy.ansible.com/redhat_cop/aap_utilities)|Ansible Automation Platform Utilities|
-|[AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)|Configuration Template for this suite|
+We are on the Ansible Forums and Matrix, if you want to discuss something, ask for help, or participate in the community, please use the #infra-config-as-code tag on the fourm, or post to the chat in Matrix.
+
+[Ansible Forums](https://forum.ansible.com/tag/infra-config-as-code)
+
+[Matrix Chat Room](https://matrix.to/#/#aap_config_as_code:ansible.com)
+
+## Requirements
+
+The awx.awx or ansible.controller collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
+
+```yaml
+---
+- name: Playbook to configure ansible controller post installation
+  hosts: localhost
+  connection: local
+  vars:
+    controller_validate_certs: false
+  collections:
+    - awx.awx
+```
+
+## Links to Ansible Automation Platform Collections
+
+|                                      Collection Name                                         |                 Purpose                  |
+|:--------------------------------------------------------------------------------------------:|:----------------------------------------:|
+| [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
+|        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
+
+## Links to other Validated Configuration Collections for Ansible Automation Platform
+
+|                                      Collection Name                                       |                 Purpose                  |
+|:------------------------------------------------------------------------------------------:|:----------------------------------------:|
+| [Controller Configuration](https://github.com/redhat-cop/controller_configuration) |   Automation controller configuration    |
+|             [EE Utilities](https://github.com/redhat-cop/ee_utilities)             | Execution Environment creation utilities |
+|     [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
+|   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
 
 ## controller config
 
