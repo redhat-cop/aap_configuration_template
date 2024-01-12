@@ -8,9 +8,9 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Add cloud and galaxy tokens
-        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+        uses: actions/checkout@v4
+      # - name: Add cloud and galaxy tokens
+      #   run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
       - name: Install ansible and builder
         run: pip3 install ansible-core ansible-builder
       - name: Install Collections
