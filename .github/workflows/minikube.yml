@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: "Install dependencies"
         run: pip install -r .github/requirements.txt
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.2
+        uses: manusa/actions-setup-minikube@v2.10.0
         with:
           minikube version: 'v1.21.0'
           kubernetes version: 'v1.20.7'
@@ -68,8 +68,8 @@ jobs:
       - name: Display Versions
         run: which python && pip --version && ansible --version
 
-      - name: Add cloud/galaxy tokens
-        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+      # - name: Add cloud/galaxy tokens
+      #   run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
 
       - name: Fixing orgs
         run: echo -e "${{ secrets.fix_orgs }}" > group_vars/all/organizations.yml
