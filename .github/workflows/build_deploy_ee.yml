@@ -18,7 +18,7 @@ jobs:
       - name: Docker login
         run: docker login -u="${{ vars.quay_username }}+github_action" -p="${{ secrets.quay_token }}" quay.io
       - name: Run Ansible Playbook
-        run: ansible-playbook playbooks/build_ee.yml -i inventory_ci.yml -l dev -e "ee_registry_username=${{ vars.quay_username }}+github_action" -e "ee_registry_password=${{ secrets.quay_token }}" -e "ah_token=something" --connection=local -e "ee_registry_dest=quay.io/${{ vars.quay_username }}/config_as_code_ee" -vvv
+        run: ansible-playbook playbooks/build_ee.yml -i inventory_ci.yml -l dev -e "ee_registry_username=${{ vars.quay_username }}+github_action" -e "ee_registry_password=${{ secrets.quay_token }}" -e "ah_token=something" -e "ee_pull_collections_from_hub=false" --connection=local -e "ee_registry_dest=quay.io/${{ vars.quay_username }}/config_as_code_ee" -vvv
         env:
           ANSIBLE_HOST_KEY_CHECKING: False
 ...
