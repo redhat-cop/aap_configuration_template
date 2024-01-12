@@ -59,7 +59,7 @@ jobs:
         run: minikube kubectl get pods
 
       - name: Set service url
-        run: echo '::set-output name=SERVICEURL::$(minikube service awx-service --url)'
+        run: echo 'SERVICEURL=$(minikube service awx-service --url)' >> $GITHUB_OUTPUT
         id: service-url
 
       - name: Display service url
