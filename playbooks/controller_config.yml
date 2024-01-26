@@ -87,6 +87,11 @@
         name: infra.controller_configuration.organizations
       when: controller_organizations | length is not match('0')
 
+    - name: Include Notification role
+      ansible.builtin.include_role:
+        name: infra.controller_configuration.notification_templates
+      when: controller_notifications | length is not match('0')
+
     - name: Include projects role
       ansible.builtin.include_role:
         name: infra.controller_configuration.projects
@@ -135,11 +140,6 @@
       ansible.builtin.include_role:
         name: infra.controller_configuration.schedules
       when: controller_schedules | length is not match('0')
-
-    - name: Include Notification role
-      ansible.builtin.include_role:
-        name: infra.controller_configuration.notification_templates
-      when: controller_notifications | length is not match('0')
 
     - name: Include roles role
       ansible.builtin.include_role:
