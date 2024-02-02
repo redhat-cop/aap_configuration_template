@@ -1,12 +1,43 @@
 ---
-cloud_token: 'this is the one from console.redhat.com'
-offline_token: 'this is the one linked below about api token'
-rh_username: 'redhat user login (this is used to attach your subs to controller)'
-rh_password: 'password for redhat account'
-root_machine_pass: 'password for root user on builder (if not root user more changes will need to be made)'
-ah_token_password: 'this will create and use this password can be generated'
-controller_api_user_pass: 'this will create and use this password can be generated'
-controller_pass: 'admin account pass for controller, if none is given it will default to Password1234!'
-ah_pass: 'hub admin account pass, if none is given it will default to Password1234!'
-vault_pass: 'the password to decrypt this vault'
+# This token is used to synchronise certifified and validated collections from
+# console.redhat.com.
+# To generate an AH token, go to the url:
+# https://console.redhat.com/ansible/automation-hub/token and click on
+# "Load Token" in the "Offline token" chapter.
+cloud_token: ''
+
+# This token use Red Hat's API to download AAP
+# Generate this token here: https://access.redhat.com/management/api
+# Keep in mind that the token will expire if it is not used for 30 days.
+offline_token: ''
+
+# Red Hat account login (this is used to attach your subs to controller)
+rh_username: ''
+
+# Red Hat account password
+rh_password: ''
+
+# The password for the root user on builder (using a non-root user would require
+# further changes)
+root_machine_pass: ''  # We disallow login via password on sshd, so we will
+# use our private key instead.
+
+# This is the password of the 'token_user' account that the playbook will create
+# in the private Automation Hub.
+ah_token_password: ''
+
+# This is the password of the 'api_user' user that the playbook will create
+# in the controller(s)
+controller_api_user_pass: ''
+
+# The admin password for the controller; if unspecified, the default
+# is Password1234!
+controller_pass: ''
+
+# The admin password for the private Automation Hub; if unspecified, the default
+# is Password1234!
+ah_pass: ''
+
+# The password to decrypt this vault
+vault_pass: ''
 ...
