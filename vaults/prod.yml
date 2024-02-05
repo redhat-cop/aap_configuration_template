@@ -19,8 +19,7 @@ rh_password: ''
 
 # The password for the root user on builder (using a non-root user would require
 # further changes)
-root_machine_pass: ''  # We disallow login via password on sshd, so we will
-# use our private key instead.
+root_machine_pass: ''
 
 # This is the password of the 'token_user' account that the playbook will create
 # in the private Automation Hub.
