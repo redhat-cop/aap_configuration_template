@@ -16,7 +16,7 @@ controller_organizations: "{{ controller_organizations_all + controller_organiza
 controller_projects: "{{ controller_projects_all + controller_projects_test }}"
 controller_roles: "{{ controller_roles_all + controller_roles_test }}"
 controller_schedules: "{{ controller_schedules_all + controller_schedules_test }}"
-controller_settings: "{{ controller_settings_all | combine(controller_settings_test, list_merge='append') }}"
+controller_settings: "{{ controller_settings_all | combine(controller_settings_test, list_merge='append', recursive=true) }}"
 controller_teams: "{{ controller_teams_all + controller_teams_test }}"
 controller_user_accounts: "{{ controller_user_accounts_all + controller_user_accounts_test }}"
 controller_workflows: "{{ controller_workflows_all + controller_workflows_test }}"
