@@ -34,6 +34,11 @@
         name: infra.ah_configuration.group
       when: ah_groups | length is not match('0')
 
+    - name: Include group_roles role
+      ansible.builtin.include_role:
+        name: infra.ah_configuration.group_roles
+      when: ah_group_roles | length is not match('0')
+
     - name: Include user role
       ansible.builtin.include_role:
         name: infra.ah_configuration.user

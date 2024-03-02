@@ -1,0 +1,13 @@
+---
+# Documentation: https://github.com/ansible/galaxy_collection/blob/devel/roles/group_roles/README.md
+ah_group_roles: []
+  # - state: present
+  #   groups:
+  #     - foo
+  #   role_list:
+  #     - roles:
+  #         - galaxy.execution_environment_namespace_owner
+  #       targets:
+  #         execution_environments:
+  #           - bar
+...
