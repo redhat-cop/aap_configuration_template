@@ -1,15 +1,19 @@
 ---
+# Documentations:
+# - https://github.com/ansible/galaxy_collection/blob/devel/roles/ee_registry/README.md
+# - https://github.com/ansible/galaxy_collection/blob/devel/roles/ee_registry_index/README.md
+# - https://github.com/ansible/galaxy_collection/blob/devel/roles/ee_registry_sync/README.md
 # ah_ee_registries:
-#   - name:
-#     new_name:
-#     url:
-#     username:
-#     password:
-#     tls_validation:
-#     proxy_url:
-#     proxy_username:
-#     proxy_password:
-#     download_concurrency:
-#     rate_limit:
-#     state: "{{ target_state }}"
+#   - name: registry_redhat_io
+#     url: https://registry.redhat.io
+#     username: "{{ rh_username }}"
+#     password: "{{ rh_password }}"
+#     tls_validation: true
+#     download_concurrency: 10
+#     rate_limit: 8
+#     proxy_url: ""
+#     proxy_username: ""
+#     proxy_password: ""
+#     wait: true
+#     state: present
 ...
