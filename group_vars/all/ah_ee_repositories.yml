@@ -1,7 +1,7 @@
 ---
 # Documentation:
 # https://github.com/ansible/galaxy_collection/tree/devel/roles/ee_repository
-# ah_ee_repositories:
+ah_ee_repositories: []
 #   - name: ansible-automation-platform/ee-minimal-rhel8
 #     readme: ""  # mutex with readme_file
 #     readme_file: ""  # mutex with readme
