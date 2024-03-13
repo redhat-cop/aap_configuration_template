@@ -1,8 +1,18 @@
 ---
-# ah_ee_repositories:
-#   - name:
-#     description:
-#     readme:
-#     readme_file:
-#     state: "{{ target_state }}"
+# Documentation:
+# https://github.com/ansible/galaxy_collection/tree/devel/roles/ee_repository
+ah_ee_repositories: []
+#   - name: ansible-automation-platform/ee-minimal-rhel8
+#     readme: ""  # mutex with readme_file
+#     readme_file: ""  # mutex with readme
+#     description: >-
+#       ee-minimal is an automation execution environment for Red Hat Ansible
+#       Automation Platform.
+#     registry: registry_redhat_io
+#     upstream_name: ansible-automation-platform/ee-minimal-rhel8
+#     include_tags:
+#       - 2.16.3-1
+#     exclude_tags:
+#       - latest  # https://access.redhat.com/solutions/6980874
+#     state: present
 ...
