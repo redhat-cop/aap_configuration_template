@@ -2,7 +2,7 @@
 controller_organizations_all:
   - name: config_as_code
     galaxy_credentials:
-      - ah_published
+      - ah_validated
       - ah_certified
       - ah_community
   # default_environment: supported
