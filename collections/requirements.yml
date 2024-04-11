@@ -8,4 +8,5 @@ collections:
   # Commented out until CI/CD can get fixed
   # - name: ansible.controller
   - name: awx.awx
+  - name: infra.eda_configuration
 ...

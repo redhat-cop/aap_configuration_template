@@ -1,0 +1,14 @@
+---
+eda_rulebook_activations:
+  - name: gitea_hook
+    description: Hook to listen for changes in gitea
+    project: eda
+    rulebook: config_as_code.yml
+    decision_environment: minimal
+    # extra_vars:
+    #   provider: github-local
+    #   repo_url: https://github.com/ansible/ansible-rulebook.git
+    enabled: true
+    state: present
+    awx_token: aap
+...

@@ -1,0 +1,33 @@
+---
+- name: Playbook to configure event driven ansible controller post installation
+  hosts: all
+  vars_files:
+    - "../vaults/{{ env }}.yml"
+  connection: local
+  tasks:
+    - name: Include credential role
+      ansible.builtin.include_role:
+        name: infra.eda_configuration.credential
+      when: eda_credentials is defined
+
+    - name: Include project role
+      ansible.builtin.include_role:
+        name: infra.eda_configuration.project
+      when: eda_projects is defined
+
+    - name: Include project_sync role
+      ansible.builtin.include_role:
+        name: infra.eda_configuration.project_sync
+      when: eda_projects is defined
+
+    - name: Include decision_environment role
+      ansible.builtin.include_role:
+        name: infra.eda_configuration.decision_environment
+      when: eda_decision_environments is defined
+
+    - name: Include rulebook_activation role
+      ansible.builtin.include_role:
+        name: infra.eda_configuration.rulebook_activation
+      when: eda_rulebook_activations is defined
+
+...

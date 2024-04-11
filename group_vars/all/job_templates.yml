@@ -31,6 +31,19 @@ controller_templates_all:
       - ah_token_user
       - vault
 
+  - name: eda_config
+    project: config_as_code
+    job_type: run
+    playbook: playbooks/eda_config.yml
+    inventory: config_as_code
+    execution_environment: supported
+    concurrent_jobs_enabled: false
+    ask_variables_on_launch: true
+    limit: "{{ env }}"
+    verbosity: 0
+    credentials:
+      - vault
+
   - name: build_execution_environments
     project: config_as_code
     job_type: run
