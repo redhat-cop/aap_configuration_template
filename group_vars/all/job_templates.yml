@@ -69,4 +69,17 @@ controller_templates_all:
     verbosity: 0
     credentials:
       - vault
+
+  - name: collection_sync
+    project: config_as_code
+    job_type: run
+    playbook: playbooks/sync_collections.yml
+    inventory: config_as_code
+    execution_environment: minimal
+    concurrent_jobs_enabled: false
+    limit: "{{ env }}"
+    verbosity: 0
+    credentials:
+      - ah_token_user
+      - vault
 ...
