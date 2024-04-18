@@ -54,6 +54,7 @@ skip_list:
   - yaml[colons] # Violations reported by yamllint.
   - yaml[line-length]  # Violations reported by yamllint.
   - yaml[new-line-at-end-of-file]  # Violations reported by yamllint.
+  - var-naming[no-role-prefix] # Because I don't want to follow this rule at this time
 
 # Ansible-lint does not automatically load rules that have the 'opt-in' tag.
 # You must enable opt-in rules by listing each rule 'id' below.
@@ -76,7 +77,6 @@ warn_list:
   - package-latest # Allow newest package version
   - template-instead-of-copy  # Templated files should use template instead of copy
   - command-instead-of-shell  # Use shell only when shell functionality is required.
-  - var-naming[no-role-prefix] # Because I don't want to follow this rule at this time
 
 # Some rules can transform files to fix (or make it easier to fix) identified
 # errors. `ansible-lint --fix` will reformat YAML files and run these transforms.
