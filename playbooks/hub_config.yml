@@ -6,6 +6,11 @@
   vars_files:
     - ../vaults/{{ env }}.yml
   tasks:
+    # Pending a bug fix
+    # - name: Include dispatch role
+    #   ansible.builtin.include_role:
+    #     name: infra.ah_configuration.dispatch
+
     - name: Include collection_remote role
       ansible.builtin.include_role:
         name: infra.ah_configuration.collection_remote
