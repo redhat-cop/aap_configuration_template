@@ -8,6 +8,6 @@ controller_organizations_all:
       - ah_community
   # default_environment: supported
 
-  - name: Default
-    state: absent
+  # - name: Default
+  #   state: absent
 ...
