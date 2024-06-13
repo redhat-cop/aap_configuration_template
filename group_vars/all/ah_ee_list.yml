@@ -1,6 +1,7 @@
 ---
+ee_pull_collections_from_hub: false
 ee_list:
-  - name: config_as_code_ee
+  - name: config_as_code_ee9
     dependencies:
       system:
         - unzip
@@ -13,9 +14,10 @@ ee_list:
           - infra.controller_configuration
           - infra.ah_configuration
           - infra.ee_utilities
-          - infra.aap_utilities
           - awx.awx
     build_steps:
       append_final:
         - RUN dnf update -y
+    options:
+      package_manager_path: /usr/bin/microdnf
 ...
