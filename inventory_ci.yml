@@ -43,4 +43,5 @@ all:
         connection: local
   vars:
     env: dev
+    ee_pull_collections_from_hub: false
 ...
