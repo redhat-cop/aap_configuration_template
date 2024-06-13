@@ -8,6 +8,7 @@ all:
       vars:
         connection: local
         controller_configuration_async_retries: 300
+        ee_pull_collections_from_hub: false
         # assign_galaxy_credentials_to_org: false
 
     automationcontroller:
@@ -43,5 +44,4 @@ all:
         connection: local
   vars:
     env: dev
-    ee_pull_collections_from_hub: false
 ...
