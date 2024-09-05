@@ -26,7 +26,7 @@
   tasks:
     - name: Call dispatch role
       ansible.builtin.include_role:
-        name: infra.eda_configuration.dispatch
+        name: infra.ah_configuration.dispatch
 
 - name: Configure ansible controller post installation
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
