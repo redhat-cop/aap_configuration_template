@@ -1,5 +1,5 @@
 ---
-controller_applications_all:
+aap_applications_all:
   - name: config_as_code_api
     description: launch controller config job template
     organization: config_as_code

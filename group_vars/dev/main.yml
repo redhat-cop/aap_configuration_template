@@ -1,5 +1,5 @@
 ---
-controller_applications: "{{ controller_applications_all + controller_applications_dev }}"
+aap_applications: "{{ aap_applications_all + aap_applications_dev }}"
 controller_credential_input_sources: "{{ controller_credential_input_sources_all + controller_credential_input_sources_dev }}"
 controller_credential_types: "{{ controller_credential_types_all + controller_credential_types_dev }}"
 controller_credentials: "{{ controller_credentials_all + controller_credentials_dev }}"
@@ -12,13 +12,13 @@ controller_inventory_sources: "{{ controller_inventory_sources_all + controller_
 controller_templates: "{{ controller_templates_all + controller_templates_dev }}"
 controller_labels: "{{ controller_labels_all + controller_labels_dev }}"
 controller_notifications: "{{ controller_notifications_all + controller_notifications_dev }}"
-controller_organizations: "{{ controller_organizations_all + controller_organizations_dev }}"
+aap_organizations: "{{ aap_organizations_all + aap_organizations_dev }}"
 controller_projects: "{{ controller_projects_all + controller_projects_dev }}"
 controller_roles: "{{ controller_roles_all + controller_roles_dev }}"
 controller_schedules: "{{ controller_schedules_all + controller_schedules_dev }}"
 controller_settings: "{{ controller_settings_all | combine(controller_settings_dev, list_merge='append', recursive=true) }}"
-controller_teams: "{{ controller_teams_all + controller_teams_dev }}"
-controller_user_accounts: "{{ controller_user_accounts_all + controller_user_accounts_dev }}"
+aap_teams: "{{ aap_teams_all + aap_teams_dev }}"
+aap_user_accounts: "{{ aap_user_accounts_all + aap_user_accounts_dev }}"
 controller_workflows: "{{ controller_workflows_all + controller_workflows_dev }}"
 env: dev
 scm_branch: "" # when you want it to be default branch just set to ""

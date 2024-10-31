@@ -1,6 +1,6 @@
 ---
 ah_token_username: token_user
-ah_users:
+aap_user_accounts:
   - username: token_user
     # Currently not working
     # groups:

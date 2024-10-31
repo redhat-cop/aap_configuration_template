@@ -41,18 +41,18 @@
         filters:
           product_name: Red Hat Ansible Automation Platform
           support_level: Self-Support
-        controller_host: "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
+        controller_host: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
         validate_certs: false
       register: subscription
 
     - name: Attach to a pool
       awx.awx.license:
         pool_id: "{{ subscription.subscriptions[0].pool_id }}"
-        controller_host: "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
+        controller_host: "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
         validate_certs: false
 
     - name: Figuring out AH token
@@ -60,9 +60,9 @@
       block:
         - name: Authenticate and get an API token from Automation Hub
           infra.ah_configuration.ah_token:
-            ah_host: "{{ ah_host | default(groups['automationhub'][0]) }}"
-            ah_username: "{{ ah_token_username | default('admin') }}"
-            ah_password: "{{ ah_token_password }}"
+            aap_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
+            aap_username: "{{ ah_token_username | default('admin') }}"
+            aap_password: "{{ ah_token_password }}"
             ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
           register: r_ah_token
@@ -79,9 +79,9 @@
     - name: Launch build execution environment job template
       awx.awx.job_launch:
         name: build_execution_environments
-        controller_host:     "{{ controller_hostname }}"
-        controller_username: "{{ controller_username }}"
-        controller_password: "{{ controller_password }}"
-        validate_certs:      "{{ controller_validate_certs }}"
+        controller_host:     "{{ aap_hostname }}"
+        aap_username: "{{ aap_username }}"
+        aap_password: "{{ aap_password }}"
+        validate_certs:      "{{ aap_validate_certs }}"
 
 ...

@@ -1,5 +1,5 @@
 ---
-controller_organizations_all:
+aap_organizations_all:
   - name: config_as_code
     galaxy_credentials:
       - ah_published

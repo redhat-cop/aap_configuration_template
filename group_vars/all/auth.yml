@@ -1,23 +1,7 @@
 # User may add controller auth creds to this file and encrypt it using `ansible-vault`
 ---
-controller_hostname: "{{ controller_host | default(groups['automationcontroller'][0]) }}:{{ controller_port | default(443) }}"
-controller_username: "{{ controller_user | default('admin') }}"
-controller_password: "{{ controller_pass }}"
-controller_validate_certs: false
-
-ah_host: "{{ ah_hostname | default(groups['automationhub'][0]) }}:{{ ah_port | default(443) }}"
-ah_username: "{{ ah_user | default('admin') }}"
-ah_password: "{{ ah_pass }}"
-ah_path_prefix: 'galaxy' # this is for private automation hub
-ah_verify_ssl: false
-ah_validate_certs: false
-
-ee_registry_username: "{{ ah_username }}"
-ee_registry_password: "{{ ah_password }}"
-ee_registry_dest: "{{ ah_host }}"
-
-eda_hostname: "{{ eda_host | default(groups['automationedacontroller'][0]) | default(groups['automationeda'][0]) }}:{{ eda_port | default(443) }}"
-eda_username: "{{ eda_user | default('admin') }}"
-eda_password: "{{ eda_pass }}"
-eda_validate_certs: false
+aap_hostname: "{{ aap_host | default(groups['automationcontroller'][0]) }}:{{ controller_port | default(443) }}"
+aap_username: "{{ aap_user | default('admin') }}"
+aap_password: "{{ aap_pass }}"
+aap_validate_certs: false
 ...
