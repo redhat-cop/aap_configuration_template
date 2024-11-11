@@ -37,32 +37,32 @@
     - name: Include ee_registry role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_registry
-      when: ah_ee_registries | length is not match('0')
+      when: hub_ee_registries | length is not match('0')
 
     - name: Include ee_registry_index role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_registry_index
-      when: ah_ee_registries | length is not match('0')
+      when: hub_ee_registries | length is not match('0')
 
     - name: Include ee_registry_sync role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_registry_sync
-      when: ah_ee_registries | length is not match('0')
+      when: hub_ee_registries | length is not match('0')
 
     - name: Include ee_repository role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_repository
-      when: ah_ee_repositories | length is not match('0')
+      when: hub_ee_repositories | length is not match('0')
 
     - name: Include ee_repository_sync role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_repository_sync
-      when: ah_ee_repositories | length is not match('0')
+      when: hub_ee_repositories | length is not match('0')
 
     - name: Include ee_image role
       ansible.builtin.include_role:
         name: infra.ah_configuration.ee_image
-      when: ah_ee_images | length is not match('0')
+      when: hub_ee_images | length is not match('0')
 
     - name: Include group role
       ansible.builtin.include_role:
@@ -72,7 +72,7 @@
     - name: Include group_roles role
       ansible.builtin.include_role:
         name: infra.ah_configuration.group_roles
-      when: ah_group_roles | length is not match('0')
+      when: hub_group_roles | length is not match('0')
 
     - name: Include user role
       ansible.builtin.include_role:
