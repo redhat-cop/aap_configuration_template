@@ -1,8 +1,0 @@
----
-# Role permissions using the 'perms' option is deprecated and will be removed
-# in galaxy_collection 3.0.0.Instead, set the group's roles in
-# groups_vars/all/hub_group_roles.yml
-aap_teams:
-  - name: admin
-    state: present
-...

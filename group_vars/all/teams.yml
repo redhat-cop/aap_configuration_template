@@ -2,4 +2,6 @@
 aap_teams_all:
   - name: config_as_code_admin
     organization: config_as_code
+  - name: admin
+    state: present
 ...
