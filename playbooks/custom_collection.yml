@@ -8,9 +8,9 @@
   tasks:
     - name: Include namespace role
       ansible.builtin.include_role:
-        name: infra.ah_configuration.namespace
+        name: infra.aap_configuration.hub_namespace
 
     - name: Include publish role
       ansible.builtin.include_role:
-        name: infra.ah_configuration.publish
+        name: infra.aap_configuration.hub_publish
 ...

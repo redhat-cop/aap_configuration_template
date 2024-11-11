@@ -17,17 +17,6 @@
       ansible.builtin.include_role:
         name: infra.aap_utilities.aap_setup_install
 
-- name: Configure private automation hub after installation
-  hosts: "{{ env | default('dev') }}" # noqa: syntax-check
-  gather_facts: false
-  connection: local
-  vars_files:
-    - "../vaults/{{ env }}.yml"
-  tasks:
-    - name: Call dispatch role
-      ansible.builtin.include_role:
-        name: infra.ah_configuration.dispatch
-
 - name: Configure ansible controller post installation
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   vars_files:
@@ -74,7 +63,7 @@
 
     - name: Call dispatch role
       ansible.builtin.include_role:
-        name: infra.controller_configuration.dispatch
+        name: infra.aap_configuration.dispatch
 
     - name: Launch build execution environment job template
       awx.awx.job_launch:
