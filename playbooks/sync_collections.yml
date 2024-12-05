@@ -8,5 +8,5 @@
   tasks:
     - name: Include collection_repository_sync role
       ansible.builtin.include_role:
-        name: infra.ah_configuration.collection_repository_sync
+        name: infra.aap_configuration.hub_collection_repository_sync
 ...

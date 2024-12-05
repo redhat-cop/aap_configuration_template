@@ -1,5 +1,5 @@
 ---
-ah_collection_remotes:
+hub_collection_remotes:
   - name: rh-certified
     token: "{{ cloud_token }}"
     url: https://console.redhat.com/api/automation-hub/content/published/
@@ -23,7 +23,7 @@ ah_collection_remotes:
       - community.crypto
       - cloud.terraform
 
-ah_collection_repositories:
+hub_collection_repositories:
   - name: rh-certified
     remote: rh-certified
   - name: validated

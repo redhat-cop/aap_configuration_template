@@ -41,7 +41,7 @@ The awx.awx or ansible.controller collections MUST be installed in order for thi
   hosts: localhost
   connection: local
   vars:
-    controller_validate_certs: false
+    aap_validate_certs: false
   collections:
     - awx.awx
 ```

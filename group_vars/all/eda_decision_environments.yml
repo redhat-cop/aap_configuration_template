@@ -2,6 +2,6 @@
 eda_decision_environments:
   - name: minimal
     description: my default decision environment
-    image_url: "{{ ah_host }}/de-minimal-rhel8"
+    image_url: "{{ aap_hostname }}/de-minimal-rhel8"
     credential: hub
 ...

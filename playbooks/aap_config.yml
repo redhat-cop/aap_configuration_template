@@ -12,9 +12,9 @@
       block:
         - name: Authenticate and get an API token from Automation Hub
           infra.ah_configuration.ah_token:
-            ah_host: "{{ ah_host | default(groups['automationhub'][0]) }}"
-            ah_username: "{{ ah_token_username | default('admin') }}"
-            ah_password: "{{ ah_token_password }}"
+            aap_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
+            aap_username: "{{ ah_token_username | default('admin') }}"
+            aap_password: "{{ ah_token_password }}"
             ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
           register: r_ah_token
@@ -26,5 +26,5 @@
 
     - name: Call dispatch role
       ansible.builtin.include_role:
-        name: infra.controller_configuration.dispatch
+        name: infra.aap_configuration.dispatch
 ...
