@@ -62,13 +62,9 @@ The awx.awx or ansible.controller collections MUST be installed in order for thi
 |     [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
 |   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
 
-## controller config
+## AAP config
 
-`ansible-playbook -i inventory_dev.yml -l dev playbooks/controller_config.yml --ask-vault-pass`
-
-## automation hub config
-
-`ansible-playbook -i inventory_dev.yml -l dev playbooks/hub_config.yml --ask-vault-pass`
+`ansible-playbook -i inventory_dev.yml -l dev playbooks/aap_config.yml --ask-vault-pass`
 
 ## custom ee
 
