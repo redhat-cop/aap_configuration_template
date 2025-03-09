@@ -1,12 +1,12 @@
 ---
 collections:
-  - name: infra.controller_configuration
-  - name: infra.ah_configuration
+  - name: infra.aap_configuration
+  - name: ansible.hub
   - name: infra.ee_utilities
   - name: infra.aap_utilities
   - name: containers.podman
   # Commented out until CI/CD can get fixed
   # - name: ansible.controller
   - name: awx.awx
-  - name: infra.eda_configuration
+  - name: ansible.eda
 ...
