@@ -11,7 +11,7 @@
       when: ah_token is not defined or ah_token['token'] is defined
       block:
         - name: Authenticate and get an API token from Automation Hub
-          infra.ah_configuration.ah_token:
+          ansible.hub.ah_token:
             aap_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
             aap_username: "{{ ah_token_username | default('admin') }}"
             aap_password: "{{ ah_token_password }}"
