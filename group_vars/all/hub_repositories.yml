@@ -1,4 +1,6 @@
 ---
+aap_configuration_async_retries: 60
+aap_configuration_async_delay: 5
 hub_collection_remotes:
   - name: rh-certified
     token: "{{ cloud_token }}"
@@ -11,13 +13,6 @@ hub_collection_remotes:
   - name: community
     url: https://galaxy.ansible.com/api/
     requirements:
-      - infra.ah_configuration
-      - infra.controller_configuration
-      - infra.aap_utilities
-      - infra.ee_utilities
-      - containers.podman
-      - awx.awx
-      - ansible.posix
       - community.docker
       - community.general
       - community.crypto
