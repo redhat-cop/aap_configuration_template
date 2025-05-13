@@ -54,12 +54,12 @@
             ah_password: "{{ ah_token_password }}"
             ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
-          register: r_ah_token
+          register: r_hub_token
 
         - name: Fixing format
           ansible.builtin.set_fact:
-            ah_token: "{{ ah_token['token'] }}"
-          when: r_ah_token['changed'] # noqa: no-handler
+            hub_token: "{{ ah_token['token'] }}"
+          when: r_hub_token['changed'] # noqa: no-handler
 
     - name: Call dispatch role
       ansible.builtin.include_role:
