@@ -24,7 +24,7 @@ ee_list:
           - infra.ah_configuration
           - infra.ee_utilities
           - infra.aap_utilities
-          - awx.awx
+          - ansible.controller
     build_steps:
       append_final:
         - RUN dnf update -y

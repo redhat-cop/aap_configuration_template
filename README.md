@@ -34,34 +34,37 @@ We are on the Ansible Forums and Matrix, if you want to discuss something, ask f
 
 ## Requirements
 
-The awx.awx or ansible.controller collections MUST be installed in order for this collection to work. It is recommended they be invoked in the playbook in the following way.
+The supported collections that contains the modules are required for this collection to work, you can copy this requirements.yml file example.
 
 ```yaml
 ---
-- name: Playbook to configure ansible controller post installation
-  hosts: localhost
-  connection: local
-  vars:
-    aap_validate_certs: false
-  collections:
-    - awx.awx
+collections:
+  - name: ansible.platform
+  - name: ansible.hub
+  - name: ansible.controller
+  - name: ansible.eda
+  - name: infra.aap_configuration
+...
 ```
+
 
 ## Links to Ansible Automation Platform Collections
 
-|                                      Collection Name                                         |                 Purpose                  |
-|:--------------------------------------------------------------------------------------------:|:----------------------------------------:|
-| [awx.awx/Ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) |   Automation controller modules          |
-|        [Ansible Hub Configuration](https://github.com/ansible/automation_hub_collection)     |       Automation hub configuration       |
+|                                      Collection Name                                |            Purpose            |
+|:-----------------------------------------------------------------------------------:|:-----------------------------:|
+| ansible.platform repo (no public repo for this collection)                          | gateway/platform modules      |
+| [ansible.hub repo](https://github.com/ansible-collections/ansible_hub)              | Automation hub modules        |
+| [ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
+| [ansible.eda repo](https://github.com/ansible/event-driven-ansible)                 | Event Driven Ansible modules  |
 
 ## Links to other Validated Configuration Collections for Ansible Automation Platform
 
-|                                      Collection Name                                       |                 Purpose                  |
-|:------------------------------------------------------------------------------------------:|:----------------------------------------:|
-| [Controller Configuration](https://github.com/redhat-cop/controller_configuration) |   Automation controller configuration    |
-|             [EE Utilities](https://github.com/redhat-cop/ee_utilities)             | Execution Environment creation utilities |
-|     [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)      |  Ansible Automation Platform Utilities   |
-|   [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)   |  Configuration Template for this suite   |
+|                                      Collection Name                                       |                      Purpose                      |
+|:------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+| [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)     | Where other useful roles that don't fit here live |
+| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                 | Execution Environment creation utilities          |
+| [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                  | Ansible Automation Platform Utilities             |
+| [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)     | Configuration Template for this suite             |
 
 ## AAP config
 
