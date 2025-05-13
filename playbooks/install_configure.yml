@@ -51,7 +51,7 @@
           infra.ah_configuration.ah_token:
             ah_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
             ah_username: "{{ ah_token_username | default('admin') }}"
-            ah_password: "{{ ah_token_password }}"
+            hub_password: "{{ hub_api_user_pass }}"
             ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
           register: r_hub_token

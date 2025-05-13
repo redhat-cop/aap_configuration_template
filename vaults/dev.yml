@@ -23,7 +23,7 @@ root_machine_pass: ''
 
 # This is the password of the 'token_user' account that the playbook will create
 # in the private Automation Hub.
-ah_token_password: ''
+hub_api_user_pass: ''
 
 # This is the password of the 'api_user' user that the playbook will create
 # in the controller(s)
@@ -35,7 +35,7 @@ controller_pass: ''
 
 # The admin password for the private Automation Hub; if unspecified, the default
 # is Password1234!
-ah_pass: ''
+hub_pass: ''
 
 # The password to decrypt this vault
 vault_pass: ''

@@ -66,7 +66,7 @@ controller_validate_certs: false
 
 ah_hostname: "{{ aap_setup_prep_inv_nodes['automationhub'][0] }}"
 ah_username: "{{ ah_username | default('admin') }}"
-ah_password: "{{ ansible_password | default('Password1234!') }}"
+hub_password: "{{ ansible_password | default('Password1234!') }}"
 # ah_oauthtoken: ""
 ah_validate_certs: false
 ...
