@@ -17,6 +17,6 @@
         body:
           grant_type: refresh_token
           client_id: cloud-services
-          refresh_token: "{{ cloud_token }}"
+          refresh_token: "{{ console_token }}"
       no_log: true
 ...

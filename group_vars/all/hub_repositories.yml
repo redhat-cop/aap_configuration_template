@@ -3,11 +3,11 @@ aap_configuration_async_retries: 60
 aap_configuration_async_delay: 5
 hub_collection_remotes:
   - name: rh-certified
-    token: "{{ cloud_token }}"
+    token: "{{ console_token }}"
     url: https://console.redhat.com/api/automation-hub/content/published/
     auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   - name: validated
-    token: "{{ cloud_token }}"
+    token: "{{ console_token }}"
     url: https://console.redhat.com/api/automation-hub/content/validated/
     auth_url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
   - name: community

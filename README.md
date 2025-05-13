@@ -8,8 +8,8 @@ You will need to replace the vault files with your own with these variables:
 
 ```yaml
 ---
-cloud_token: 'this is the one from console.redhat.com'
-offline_token: 'this is the one linked below about api token'
+console_token: 'this is the one from console.redhat.com'
+redhat_api_token: 'this is the one linked below about api token'
 rh_username: 'redhat user login (this is used to attach your subs to controller)'
 rh_password: 'password for redhat account'
 root_machine_pass: 'password for root user on builder (if not root user more changes will need to be made)'
@@ -17,6 +17,7 @@ ah_token_password: 'this will create and use this password can be generated'
 controller_api_user_pass: 'this will create and use this password can be generated'
 controller_pass: 'admin account pass for controller, if none is given it will default to Password1234!'
 ah_pass: 'hub admin account pass, if none is given it will default to Password1234!'
+# hub_token: 'hub token to pull collections, it is best to save in vault for more reliable usage vs generating on the fly'
 vault_pass: 'the password to decrypt this vault'
 ...
 ```

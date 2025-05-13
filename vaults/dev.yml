@@ -4,12 +4,12 @@
 # To generate an AH token, go to the url:
 # https://console.redhat.com/ansible/automation-hub/token and click on
 # "Load Token" in the "Offline token" chapter.
-cloud_token: ''
+console_token: ''
 
 # This token use Red Hat's API to download AAP
 # Generate this token here: https://access.redhat.com/management/api
 # Keep in mind that the token will expire if it is not used for 30 days.
-offline_token: ''
+redhat_api_token: ''
 
 # Red Hat account login (this is used to attach your subs to controller)
 rh_username: ''
