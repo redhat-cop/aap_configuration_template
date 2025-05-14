@@ -1,0 +1,11 @@
+---
+collections:
+  - name: infra.aap_configuration
+  - name: infra.ee_utilities
+  - name: infra.aap_utilities
+  # - name: containers.podman
+  # - name: ansible.platform
+  # - name: ansible.hub
+  # - name: ansible.controller
+  # - name: ansible.eda
+...
