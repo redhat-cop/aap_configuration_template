@@ -52,7 +52,7 @@ jobs:
           echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
           ansible-galaxy collection install -f -r .github/requirements.yml
       - name: ansible-lint
-        uses: ansible/ansible-lint-action@main
+        uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
         with:
           target: .
 ...
