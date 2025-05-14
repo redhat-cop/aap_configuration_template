@@ -23,8 +23,41 @@
 #       #   # with:
 #       #   #   path: "playbooks/"  # <-- only one value is allowed
 
-name: Ansible Lint
+# name: Ansible Lint
 
+# concurrency:
+#   group: ${{ github.head_ref || github.run_id }}
+#   cancel-in-progress: true
+
+# on:
+#   push:
+#   pull_request:
+#   workflow_call:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: "0 0 * * *"
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       # - name: Set up Python
+#       #   uses: actions/setup-python@v5
+#       #   with:
+#       #     python-version: '3.13'
+#       # - name: Install Collections
+#       #   run: |
+#       #     echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
+#       #     ansible-galaxy collection install -f -r .github/requirements.yml
+#       - name: ansible-lint
+#         uses: ansible/ansible-lint@main
+#         with:
+#           requirements_file: .github/requirements.yml
+
+# .github/workflows/ansible-lint.yml
+name: ansible-lint
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -39,20 +72,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: Ansible Lint # Naming the build is important to use it as a status check
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+        # optional (see below):
         with:
-          python-version: '3.13'
-      - name: Install Collections
-        run: |
-          echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
-          ansible-galaxy collection install -f -r .github/requirements.yml
-      - name: ansible-lint
-        uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-        with:
-          target: .
+          # args: ""
+          setup_python: "true"
+          # working_directory: ""
+          requirements_file: ".github/requirements.yml"
 ...
