@@ -4,12 +4,12 @@
 # To generate an AH token, go to the url:
 # https://console.redhat.com/ansible/automation-hub/token and click on
 # "Load Token" in the "Offline token" chapter.
-cloud_token: ''
+console_token: ''
 
 # This token use Red Hat's API to download AAP
 # Generate this token here: https://access.redhat.com/management/api
 # Keep in mind that the token will expire if it is not used for 30 days.
-offline_token: ''
+redhat_api_token: ''
 
 # Red Hat account login (this is used to attach your subs to controller)
 rh_username: ''
@@ -23,7 +23,7 @@ root_machine_pass: ''
 
 # This is the password of the 'token_user' account that the playbook will create
 # in the private Automation Hub.
-ah_token_password: ''
+hub_api_user_pass: ''
 
 # This is the password of the 'api_user' user that the playbook will create
 # in the controller(s)
@@ -35,7 +35,7 @@ controller_pass: ''
 
 # The admin password for the private Automation Hub; if unspecified, the default
 # is Password1234!
-ah_pass: ''
+hub_pass: ''
 
 # The password to decrypt this vault
 vault_pass: ''

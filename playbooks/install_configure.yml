@@ -24,7 +24,7 @@
   connection: local
   tasks:
     - name: Get subscriptions with a filter
-      awx.awx.subscriptions:
+      ansible.controller.subscriptions:
         username: "{{ rh_username }}"
         password: "{{ rh_password }}"
         filters:
@@ -37,7 +37,7 @@
       register: subscription
 
     - name: Attach to a pool
-      awx.awx.license:
+      ansible.controller.license:
         pool_id: "{{ subscription.subscriptions[0].pool_id }}"
         controller_host: "{{ aap_hostname }}"
         aap_username: "{{ aap_username }}"
@@ -49,24 +49,24 @@
       block:
         - name: Authenticate and get an API token from Automation Hub
           infra.ah_configuration.ah_token:
-            aap_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
-            aap_username: "{{ ah_token_username | default('admin') }}"
-            aap_password: "{{ ah_token_password }}"
+            ah_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
+            ah_username: "{{ ah_token_username | default('admin') }}"
+            hub_password: "{{ hub_api_user_pass }}"
             ah_path_prefix: galaxy # this is for private automation hub
             validate_certs: false
-          register: r_ah_token
+          register: r_hub_token
 
         - name: Fixing format
           ansible.builtin.set_fact:
-            ah_token: "{{ ah_token['token'] }}"
-          when: r_ah_token['changed'] # noqa: no-handler
+            hub_token: "{{ ah_token['token'] }}"
+          when: r_hub_token['changed'] # noqa: no-handler
 
     - name: Call dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
 
     - name: Launch build execution environment job template
-      awx.awx.job_launch:
+      ansible.controller.job_launch:
         name: build_execution_environments
         controller_host:     "{{ aap_hostname }}"
         aap_username: "{{ aap_username }}"

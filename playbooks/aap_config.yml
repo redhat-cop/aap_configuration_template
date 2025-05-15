@@ -5,25 +5,6 @@
     - ../vaults/{{ env }}.yml
   connection: local
   tasks:
-    # probably not good but kinda works, looking for better solutions,
-    # you are better off removing this block and getting token into vault by hand
-    - name: Figuring out AH token
-      when: ah_token is not defined or ah_token['token'] is defined
-      block:
-        - name: Authenticate and get an API token from Automation Hub
-          ansible.hub.ah_token:
-            aap_hostname: "{{ aap_hostname | default(groups['automationhub'][0]) }}"
-            aap_username: "{{ ah_token_username | default('admin') }}"
-            aap_password: "{{ ah_token_password }}"
-            ah_path_prefix: galaxy # this is for private automation hub
-            validate_certs: false
-          register: r_ah_token
-
-        - name: Fixing format
-          ansible.builtin.set_fact:
-            ah_token: "{{ ah_token['token'] }}"
-          when: r_ah_token['changed'] # noqa: no-handler
-
     - name: Call dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch

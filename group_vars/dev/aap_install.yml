@@ -1,0 +1,72 @@
+---
+# WARNING THIS IS UNTESTED AND JUST AN EXAMPLE!
+aap_setup_down_redhat_api_token: "{{ redhat_api_token }}"
+aap_setup_down_version: 2.5
+aap_setup_rhel_version: 9
+aap_setup_containerized: true
+# aap_setup_down_dest_dir: /tmp/
+# aap_setup_down_type: setup # default is bundle
+
+# aap_setup_prep_installer_file: "{{ aap_setup_down_installer_file }}"
+# aap_setup_prep_working_dir: "{{ aap_setup_down_dest_dir }}"
+# aap_setup_prep_process_template: true
+aap_setup_prep_inv_nodes:
+  automationgateway: "{{ groups['automationgateway'] }}"
+  automationcontroller: "{{ groups['automationcontroller'] }}"
+  execution_nodes: "{{ groups['execution_nodes'] }}"
+  automationhub: "{{ groups['automationhub'] }}"
+  automationeda: "{{ groups['automationeda'] }}"
+  redis: "{{ groups['redis'] | default(omit) }}"
+  database: "{{ groups['database'] | default(omit) }}"
+
+aap_setup_prep_inv_vars:
+  all:
+    pulp_rhel_codeready_repo: [] # required or it will fail
+    postgresql_admin_username: postgresql_admin
+    postgresql_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    registry_username: "{{ aap_setup_prep_registry_username | default('admin') }}"
+    registry_password: "{{ aap_setup_prep_registry_password | default(ansible_password) | default('Password1234!') }}"
+    gateway_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    gateway_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    gateway_pg_database: gateway
+    gateway_pg_username: gateway_user
+    gateway_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    controller_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    controller_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    controller_pg_database: controller
+    controller_pg_username: controller_user
+    controller_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    hub_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    hub_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    hub_pg_database: hub
+    hub_pg_username: hub_user
+    hub_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    eda_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    eda_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    eda_pg_database: eda
+    eda_pg_username: eda_user
+    eda_pg_password: "{{ ansible_password | default('Password1234!') }}"
+
+aap_setup_prep_inv_secrets:
+
+# aap_setup_inst_setup_dir: "{{ aap_setup_prep_setup_dir }}"
+# aap_setup_inst_inventory: inventory
+aap_setup_inst_extra_vars:
+  create_preload_data: false
+# controller_hostname/username/password/validate_certs: ???????????????????????
+# ah_hostname/username/password/validate_certs: ???????????????????????
+aap_setup_inst_force: true
+
+controller_hostname: "{{ aap_setup_prep_inv_nodes['automationcontroller'][0] }}"
+controller_username: "{{ controller_username | default('admin') }}"
+controller_password: "{{ ansible_password | default('Password1234!') }}"
+# controller_oauthtoken: ""
+# controller_config_file: ""
+controller_validate_certs: false
+
+ah_hostname: "{{ aap_setup_prep_inv_nodes['automationhub'][0] }}"
+ah_username: "{{ ah_username | default('admin') }}"
+hub_password: "{{ ansible_password | default('Password1234!') }}"
+# ah_oauthtoken: ""
+ah_validate_certs: false
+...

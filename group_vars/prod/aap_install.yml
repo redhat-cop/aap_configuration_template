@@ -1,0 +1,86 @@
+---
+# WARNING THIS IS UNTESTED AND JUST AN EXAMPLE!
+aap_setup_down_redhat_api_token: "{{ redhat_api_token }}"
+aap_setup_down_version: 2.4
+aap_setup_rhel_version: 8
+# aap_setup_down_dest_dir: /tmp/
+# aap_setup_down_type: setup # default is bundle
+
+# aap_setup_prep_installer_file: "{{ aap_setup_down_installer_file }}"
+# aap_setup_prep_working_dir: "{{ aap_setup_down_dest_dir }}"
+# aap_setup_prep_process_template: true
+aap_setup_prep_inv_nodes:
+  automationcontroller: "{{ groups['automationcontroller'] }}"
+  automationedacontroller: "{{ groups['automationedacontroller'] }}"
+  database: "{{ groups['database'] | default(omit) }}"
+  automationhub: "{{ groups['automationhub'] }}"
+  # SSO: # not yet implemented
+aap_setup_prep_inv_vars:
+  all:
+    pulp_rhel_codeready_repo: [] # required or it will fail
+    admin_password: "{{ ansible_password | default('Password1234!') }}"
+    registry_username: "{{ aap_setup_prep_registry_username | default('admin') }}"
+    registry_password: "{{ aap_setup_prep_registry_password | default(ansible_password) | default('Password1234!') }}"
+    registry_url: "{{ aap_setup_prep_registry_url | default(aap_setup_prep_inv_nodes['automationhub'][0]) }}"
+    # custom_ca_cert: /path/to/ca.crt
+    # web_server_ssl_cert: /path/to/tower.cert
+    # web_server_ssl_key: /path/to/tower.key
+    pg_password: "{{ ansible_password | default('Password1234!') }}"
+    pg_host: "{{ aap_db_host | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    pg_port: "5432"
+    pg_database: awx
+    pg_username: awx
+    pg_sslmode: prefer # set to 'verify-full' for client-side enforced SSL
+    automationhub_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    # automationhub_importer_settings: ""
+    automationhub_require_content_approval: true
+    # automationhub_disable_https: false
+    # automationhub_disable_hsts: false
+    # automationhub_ssl_validate_certs: ""
+    # automationhub_ssl_cert: ""
+    # automationhub_ssl_key: ""
+    # automationhub_backup_collections: ""
+    automationhub_pg_host: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    automationhub_pg_port: "5432"
+    automationhub_pg_database: automationhub
+    automationhub_pg_username: automationhub
+    automationhub_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    automationhub_pg_sslmode: prefer # set to 'verify-full' for client-side enforced SSL
+    # sso_keystore_password: "{{ ansible_password | default('Password1234!') }}"
+    # automationhub_main_url: 'https://automationhub.ansible.com'
+    automationedacontroller_admin_password: "{{ ansible_password | default('Password1234!') }}"
+    automationedacontroller_pg_host: "{{ aap_db_host | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    automationedacontroller_pg_port: "5432"
+    automationedacontroller_pg_database: "{{ ah_db_host | default(aap_setup_prep_inv_nodes['database'][1]) | default(aap_setup_prep_inv_nodes['database'][0]) }}"
+    automationedacontroller_pg_username: automationedacontroller
+    automationedacontroller_pg_password: "{{ ansible_password | default('Password1234!') }}"
+    # automation_controller_main_url = ''
+    # automationedacontroller_controller_verify_ssl = true
+    postgres_use_ssl: false
+    # postgres_ssl_cert: /path/to/pgsql.crt
+    # postgres_ssl_key: /path/to/pgsql.key
+    # sso_console_admin_username: 'admin'
+    # sso_console_admin_password: "{{ ansible_password | default('Password1234!') }}"
+aap_setup_prep_inv_secrets:
+
+# aap_setup_inst_setup_dir: "{{ aap_setup_prep_setup_dir }}"
+# aap_setup_inst_inventory: inventory
+aap_setup_inst_extra_vars:
+  create_preload_data: false
+# controller_hostname/username/password/validate_certs: ???????????????????????
+# ah_hostname/username/password/validate_certs: ???????????????????????
+aap_setup_inst_force: true
+
+controller_hostname: "{{ aap_setup_prep_inv_nodes['automationcontroller'][0] }}"
+controller_username: "{{ controller_username | default('admin') }}"
+controller_password: "{{ ansible_password | default('Password1234!') }}"
+# controller_oauthtoken: ""
+# controller_config_file: ""
+controller_validate_certs: false
+
+ah_hostname: "{{ aap_setup_prep_inv_nodes['automationhub'][0] }}"
+ah_username: "{{ ah_username | default('admin') }}"
+hub_password: "{{ ansible_password | default('Password1234!') }}"
+# ah_oauthtoken: ""
+ah_validate_certs: false
+...

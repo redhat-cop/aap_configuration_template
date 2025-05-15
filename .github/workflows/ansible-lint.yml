@@ -1,25 +1,29 @@
 ---
-name: Ansible Lint # feel free to pick your own name
-on: [push, pull_request]
+name: ansible-lint
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  push:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    name: Ansible Lint # Naming the build is important to use it as a status check
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
-      - name: Add cloud and galaxy tokens
-        run: echo -e "${{ secrets.galaxy_token }}" >> ansible.cfg
-      - name: Install ansible-lint
-        run: pip3 install ansible-core ansible-lint yamllint
-      - name: Install Collections
-        run: ansible-galaxy collection install -f -r collections/requirements.yml
-      - name: Lint Ansible Playbook
-        run: ansible-lint --profile=production
-      # - name: Run ansible-lint
-      #   uses: ansible-community/ansible-lint-action@main
-      #   # optional:
-      #   # with:
-      #   #   path: "playbooks/"  # <-- only one value is allowed
+      - uses: actions/checkout@v4
+      - name: Run ansible-lint
+        uses: ansible/ansible-lint@main
+        # optional (see below):
+        with:
+          # args: ""
+          setup_python: "true"
+          # working_directory: ""
+          requirements_file: ".github/requirements.yml"
 ...

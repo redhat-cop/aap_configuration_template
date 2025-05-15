@@ -10,6 +10,6 @@ aap_user_accounts_all:
     #   - "admin"
     append: true
     is_superuser: true
-    password: "{{ ah_token_password }}"
+    password: "{{ hub_api_user_pass }}"
     state: present
 ...
