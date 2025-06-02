@@ -29,9 +29,9 @@ hub_api_user_pass: ''
 # in the controller(s)
 controller_api_user_pass: ''
 
-# The admin password for the controller; if unspecified, the default
+# The admin password for the gateway; if unspecified, the default
 # is Password1234!
-controller_pass: ''
+aap_pass: ''
 
 # The admin password for the private Automation Hub; if unspecified, the default
 # is Password1234!
