@@ -12,13 +12,13 @@ controller_templates_all:
     verbosity: 0
     credentials:
       - aap_admin
-      - ah_token_user
+      - hub_token_user
       - vault
     extra_vars:
       # for debugging errors with creds change to false
       controller_configuration_credentials_secure_logging: true
 
-  - name: ah_config
+  - name: hub_config
     project: config_as_code
     job_type: run
     playbook: playbooks/hub_config.yml
@@ -28,7 +28,7 @@ controller_templates_all:
     limit: "{{ env }}"
     verbosity: 0
     credentials:
-      - ah_token_user
+      - hub_token_user
       - vault
 
   - name: eda_config
@@ -54,7 +54,7 @@ controller_templates_all:
     verbosity: 0
     credentials:
       - root
-      - ah_admin_user_pass
+      - hub_admin_user_pass
     labels:
       - EE
 
@@ -69,7 +69,7 @@ controller_templates_all:
     verbosity: 0
     credentials:
       - root
-      - ah_token_user
+      - hub_token_user
 
   - name: console_token_refresh
     project: config_as_code
@@ -93,6 +93,6 @@ controller_templates_all:
     limit: "{{ env }}"
     verbosity: 0
     credentials:
-      - ah_token_user
+      - hub_token_user
       - vault
 ...

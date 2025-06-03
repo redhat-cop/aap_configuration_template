@@ -1,5 +1,5 @@
 ---
-ah_token_username: token_user
+hub_token_username: token_user
 aap_user_accounts_all:
   - username: api_user
     is_superuser: false
