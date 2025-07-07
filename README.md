@@ -4,6 +4,8 @@ This is a combination of all the Red Hat CoP Config as Code collections to deplo
 
 [^1]: If you only have/want one environment you could delete dev/test/prod folders in group_vars and remove all the _all added to vars in all group. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
 
+The main branch is built for 2.5+ AAP if you are running 2.4 or lower make sure to copy the template branch aap2.4
+
 You will need to replace the vault files with your own with these variables:
 
 ```yaml
