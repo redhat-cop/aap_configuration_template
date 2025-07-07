@@ -11,7 +11,7 @@ controller_templates_dev:
     verbosity: 0
     credentials:
       - aap_admin
-      - ah_token_user
+      - hub_token_user
       - vault
     extra_vars:
       # for debugging errors with creds change to false

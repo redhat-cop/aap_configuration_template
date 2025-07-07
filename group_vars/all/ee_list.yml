@@ -20,11 +20,14 @@ ee_list:
         - netaddr
       galaxy:
         collections:
-          - infra.controller_configuration
-          - infra.ah_configuration
+          - infra.aap_configuration
           - infra.ee_utilities
           - infra.aap_utilities
+          - containers.podman
+          - ansible.platform
+          - ansible.hub
           - ansible.controller
+          - ansible.eda
     build_steps:
       append_final:
         - RUN dnf update -y
