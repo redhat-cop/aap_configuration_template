@@ -1,9 +1,9 @@
 ---
 controller_templates_all:
-  - name: controller_config
+  - name: aap_config
     project: config_as_code
     job_type: run
-    playbook: playbooks/controller_config.yml
+    playbook: playbooks/aap_config.yml
     inventory: config_as_code
     execution_environment: supported
     concurrent_jobs_enabled: false
@@ -17,32 +17,6 @@ controller_templates_all:
     extra_vars:
       # for debugging errors with creds change to false
       controller_configuration_credentials_secure_logging: true
-
-  - name: hub_config
-    project: config_as_code
-    job_type: run
-    playbook: playbooks/hub_config.yml
-    inventory: config_as_code
-    execution_environment: supported
-    concurrent_jobs_enabled: false
-    limit: "{{ env }}"
-    verbosity: 0
-    credentials:
-      - hub_token_user
-      - vault
-
-  - name: eda_config
-    project: config_as_code
-    job_type: run
-    playbook: playbooks/eda_config.yml
-    inventory: config_as_code
-    execution_environment: supported
-    concurrent_jobs_enabled: false
-    ask_variables_on_launch: true
-    limit: "{{ env }}"
-    verbosity: 0
-    credentials:
-      - vault
 
   - name: build_execution_environments
     project: config_as_code
