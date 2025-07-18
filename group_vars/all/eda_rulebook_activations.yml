@@ -5,12 +5,13 @@ eda_rulebook_activations:
     description: Hook to listen for changes in gitea
     project: eda
     rulebook: gitea_casc.yml
-    decision_environment: minimal
+    decision_environment: supported
     # extra_vars:
     #   provider: github-local
     #   repo_url: https://github.com/ansible/ansible-rulebook.git
     enabled: true
     state: present
-    credentials: aap_admin
+    credentials:
+      - aap_admin
     # awx_token: aap # this is only for 2.4 I think
 ...
