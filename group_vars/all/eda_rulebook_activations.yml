@@ -11,7 +11,7 @@ eda_rulebook_activations:
     #   repo_url: https://github.com/ansible/ansible-rulebook.git
     enabled: true
     state: present
-    credentials:
+    eda_credentials:
       - aap_admin
     # awx_token: aap # this is only for 2.4 I think
 ...
