@@ -3,6 +3,6 @@ eda_decision_environments:
   - name: minimal
     organization: config_as_code
     description: my default decision environment
-    image_url: "{{ aap_hostname }}/de-minimal-rhel8"
+    image_url: "{{ aap_hostname }}/de-minimal-rhel8" # for OCP change this to pull directly from registry.redhat.io
     credential: hub
 ...

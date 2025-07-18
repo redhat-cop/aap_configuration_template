@@ -1,14 +1,16 @@
 ---
 eda_rulebook_activations:
   - name: gitea_hook
+    organization: config_as_code
     description: Hook to listen for changes in gitea
     project: eda
-    rulebook: config_as_code.yml
+    rulebook: gitea_casc.yml
     decision_environment: minimal
     # extra_vars:
     #   provider: github-local
     #   repo_url: https://github.com/ansible/ansible-rulebook.git
     enabled: true
     state: present
-    awx_token: aap
+    credentials: aap_admin
+    # awx_token: aap # this is only for 2.4 I think
 ...
