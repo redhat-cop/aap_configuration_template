@@ -1,6 +1,7 @@
 ---
 eda_projects:
   - name: eda
+    organization: config_as_code
     description: config as code eda
     url: https://github.com/djdanielsson/eda.git
     # credential: test_token
