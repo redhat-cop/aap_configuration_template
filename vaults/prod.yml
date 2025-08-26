@@ -37,6 +37,10 @@ aap_pass: ''
 # is Password1234!
 hub_pass: ''
 
+# The installed AAP Hub token, commented in collection's README.md and referenced in
+# Controller config tasks.
+hub_token: ''
+
 # The password to decrypt this vault
 vault_pass: ''
 ...
