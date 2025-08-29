@@ -36,7 +36,7 @@ We are on the Ansible Forums and Matrix, if you want to discuss something, ask f
 
 ## Documentation
 
-[For documentation and examples, please visit us on Galaxy](https://galaxy.ansible.com/ui/repo/published/infra/aap_configuration/)
+[For documentation and examples, please visit us on Galaxy]([https://console.redhat.com/ui/repo/published/infra/aap_configuration/](https://console.redhat.com/ansible/automation-hub/repo/validated/infra/aap_configuration/docs/))
 
 ## Requirements
 
