@@ -34,6 +34,10 @@ We are on the Ansible Forums and Matrix, if you want to discuss something, ask f
 
 [Matrix Chat Room](https://matrix.to/#/#aap_config_as_code:ansible.com)
 
+## Documentation
+
+[For documentation and examples, please visit us on Galaxy]([https://console.redhat.com/ui/repo/published/infra/aap_configuration/](https://console.redhat.com/ansible/automation-hub/repo/validated/infra/aap_configuration/docs/))
+
 ## Requirements
 
 The supported collections that contains the modules are required for this collection to work, you can copy this requirements.yml file example.

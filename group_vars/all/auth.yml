@@ -1,6 +1,6 @@
 # User may add controller auth creds to this file and encrypt it using `ansible-vault`
 ---
-aap_hostname: "{{ aap_host | default(groups['automationcontroller'][0]) }}:{{ controller_port | default(443) }}"
+aap_hostname: "{{ aap_host | default(groups['automationgateway'][0]) }}:{{ gateway_port | default(443) }}"
 aap_username: "{{ aap_user | default('admin') }}"
 aap_password: "{{ aap_pass }}"
 aap_validate_certs: false
