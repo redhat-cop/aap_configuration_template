@@ -6,4 +6,6 @@
     - name: Call dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
+      vars:
+        dispatch_include_wildcard_vars: true
 ...
