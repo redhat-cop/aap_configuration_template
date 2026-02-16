@@ -2,8 +2,6 @@
 - name: Deploy Ansible Automation Platform
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   connection: local
-  vars_files:
-    - "../vaults/{{ env }}.yml"
   tasks:
     - name: Include aap_setup_download role
       ansible.builtin.include_role:
@@ -19,8 +17,6 @@
 
 - name: Configure ansible controller post installation
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
-  vars_files:
-    - "../vaults/{{ env }}.yml"
   connection: local
   tasks:
     - name: Get subscriptions with a filter

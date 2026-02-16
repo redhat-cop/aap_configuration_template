@@ -3,8 +3,6 @@
   hosts: all
   gather_facts: false
   connection: local
-  vars_files:
-    - ../vaults/{{ env }}.yml
   tasks:
     - name: Include collection_repository_sync role
       ansible.builtin.include_role:

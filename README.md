@@ -1,30 +1,87 @@
 # Ansible Automation Platform Configuration as Code examples template
 
-This is a combination of all the Red Hat CoP Config as Code collections to deploy and configure AAP. This is built for multi environment (meaning multiple AAP instances/clusters). If you want an object across all environments put it in the correct file/list under the all group. If there is a specific object for only one environment then put it under that environments folder[^1].
+This is a combination of all the Red Hat CoP Config as Code collections to deploy and configure AAP. This is built for multi environment (meaning multiple AAP instances/clusters). If you want an object across all environments put it in the correct file/list under the `group_vars/all/` directory. If there is a specific object for only one environment then put it under that environment's folder (e.g., `group_vars/dev/`, `group_vars/qa/`, `group_vars/prod/`)[^1].
 
-[^1]: If you only have/want one environment you could delete dev/test/prod folders in group_vars and remove all the _all added to vars in all group. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
+[^1]: If you only have/want one environment you could delete dev/qa/prod folders in the group_vars directory and remove all the environment suffixes (e.g., `_dev`, `_qa`, `_prod`) from vars, keeping only `_all`. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
 
 The main branch is built for 2.5+ AAP if you are running 2.4 or lower make sure to copy the template branch aap2.4
 
-You will need to replace the vault files with your own with these variables:
+## Secrets Management
+
+This repository uses `secrets.yml` files with inline encrypted vault strings instead of separate vault files. Each environment has its own secrets file located at `group_vars/<env>/secrets.yml` (e.g., `group_vars/dev/secrets.yml`, `group_vars/qa/secrets.yml`, `group_vars/prod/secrets.yml`).
+
+You will need to replace the encrypted values in your environment's `secrets.yml` file with your own vault-encrypted strings containing these variables:
 
 ```yaml
 ---
-console_token: 'this is the one from console.redhat.com'
-redhat_api_token: 'this is the one linked below about api token'
-rh_username: 'redhat user login (this is used to attach your subs to controller)'
-rh_password: 'password for redhat account'
-root_machine_pass: 'password for root user on builder (if not root user more changes will need to be made)'
-hub_api_user_pass: 'this will create and use this password can be generated'
-controller_api_user_pass: 'this will create and use this password can be generated'
-aap_pass: 'admin account pass for gateway, if none is given it will default to Password1234!'
-hub_pass: 'hub admin account pass, if none is given it will default to Password1234!'
-# hub_token: 'hub token to pull collections, it is best to save in vault for more reliable usage vs generating on the fly'
-vault_pass: 'the password to decrypt this vault'
+console_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+redhat_api_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+rh_username: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+rh_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+root_machine_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+hub_api_user_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+controller_api_user_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+aap_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+hub_token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
+
+vault_pass: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          ...your encrypted string...
 ...
 ```
 
-**_NOTE:_** Do not forget to update your inventory files replacing the `HERE` lines, if you do not have a `builder` server you can use `hub` for this. Also update `scm_url` in `group_vars/all/projects.yml` with your git URL.
+### Variable Descriptions:
+
+- `console_token`: Token from console.redhat.com for Red Hat Console access
+- `redhat_api_token`: API token for Red Hat API (see link below)
+- `rh_username`: Red Hat user login (used to attach subscriptions to controller)
+- `rh_password`: Password for Red Hat account
+- `root_machine_pass`: Password for root user on builder (if not root user, more changes will need to be made)
+- `hub_api_user_pass`: Password for Hub API user (will be created and used, can be generated)
+- `controller_api_user_pass`: Password for Controller API user (will be created and used, can be generated)
+- `aap_pass`: Admin account password for gateway (defaults to Password1234! if not provided)
+- `hub_token`: Hub token to pull collections (recommended to save in vault for more reliable usage vs generating on the fly)
+- `vault_pass`: Password for vault credential type
+
+### Creating Encrypted Strings
+
+To create vault-encrypted strings for your `secrets.yml` file:
+
+```bash
+# Encrypt a single value
+ansible-vault encrypt_string 'your_secret_value' --name 'variable_name'
+
+# Or interactively
+ansible-vault encrypt_string --stdin-name 'variable_name'
+```
+
+**_NOTE:_** Do not forget to update your inventory files in `inventory/` directory, replacing the `HERE` lines with your actual FQDNs. If you do not have a builder server you can use hub for this. Also update `scm_url` in `group_vars/all/controller_projects.yml` with your git URL.
 
 ## Getting Help
 
@@ -74,7 +131,11 @@ collections:
 
 ## AAP config
 
-`ansible-playbook -i inventory_dev.yml -l dev playbooks/aap_config.yml --ask-vault-pass`
+Configure an existing AAP installation with your configuration as code:
+
+```bash
+ansible-playbook -i inventory/inventory_dev.yml -l dev playbooks/aap_config.yml --ask-vault-pass
+```
 
 ## custom ee
 
@@ -86,12 +147,20 @@ currently doesn't work in CLI, expected to be run in Controller
 
 ## aap utilities (aap installer)
 
-`ansible-playbook -i inventory_dev.yml playbooks/install_aap.yml --ask-vault-pass`
+Install AAP using the aap_utilities collection:
+
+```bash
+ansible-playbook -i inventory/inventory_dev.yml playbooks/install_aap.yml --ask-vault-pass
+```
 
 Acquire your token at [redhat api](https://access.redhat.com/management/api/) see [access article](https://access.redhat.com/articles/3626371)
 
 ## install and configure
 
-`ansible-playbook -i inventory_dev.yml -l dev playbooks/install_configure.yml --ask-vault-pass -e "env=dev"`
+Install AAP and configure it in one step:
+
+```bash
+ansible-playbook -i inventory/inventory_dev.yml -l dev playbooks/install_configure.yml --ask-vault-pass -e "env=dev"
+```
 
 Acquire your token at [redhat api](https://access.redhat.com/management/api/) see [access article](https://access.redhat.com/articles/3626371)

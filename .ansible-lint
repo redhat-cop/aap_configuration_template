@@ -10,15 +10,15 @@ profile: production # min, basic, moderate,safety, shared, production
 # and not relative to the CWD of execution. CLI arguments passed to the --exclude
 # option are parsed relative to the CWD of execution.
 exclude_paths:
+  - .cache/ # implicit unless exclude_paths is defined in config
   - '.github/'
   - 'changelogs/'
   - 'playbooks/install_configure.yml'
   - 'aap_configuration_template/playbooks/install_configure.yml'
 
-parseable: true
 # quiet: true
 # strict: true
-verbosity: 1
+# verbosity: 1
 
 # Mock modules or roles in order to pass ansible-playbook --syntax-check
 mock_modules:
@@ -64,6 +64,7 @@ enable_list:
   - no-log-password # opt-in
   - no-same-owner # opt-in
   - name[prefix] # opt-in
+  - galaxy-version-incorrect # opt-in
   # add yaml here if you want to avoid ignoring yaml checks when yamllint
   # library is missing. Normally its absence just skips using that rule.
   - yaml
@@ -73,10 +74,10 @@ enable_list:
 
 # Ansible-lint does not fail on warnings from the rules or tags listed below
 warn_list:
-  - git-latest # Allow for newest git version
-  - package-latest # Allow newest package version
-  - template-instead-of-copy  # Templated files should use template instead of copy
-  - command-instead-of-shell  # Use shell only when shell functionality is required.
+  - skip_this_tag
+  - experimental # experimental is included in the implicit list
+  # - role-name
+  # - yaml[document-start]  # you can also use sub-rule matches
 
 # Some rules can transform files to fix (or make it easier to fix) identified
 # errors. `ansible-lint --fix` will reformat YAML files and run these transforms.
@@ -125,4 +126,8 @@ task_name_prefix: "{stem} | "
 
 # Limit the depth of the nested blocks:
 # max_block_depth: 20
+
+# Also recognize these versions of Ansible as supported:
+# supported_ansible_also:
+#   - "2.18"
 ...
