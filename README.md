@@ -1,14 +1,14 @@
 # Ansible Automation Platform Configuration as Code examples template
 
-This is a combination of all the Red Hat CoP Config as Code collections to deploy and configure AAP. This is built for multi environment (meaning multiple AAP instances/clusters). If you want an object across all environments put it in the correct file/list under the `group_vars/all/` directory. If there is a specific object for only one environment then put it under that environment's folder (e.g., `group_vars/dev/`, `group_vars/qa/`, `group_vars/prod/`)[^1].
+This is a combination of all the Red Hat CoP Config as Code collections to deploy and configure AAP. This is built for multi environment (meaning multiple AAP instances/clusters). If you want an object across all environments put it in the correct file/list under the `config/all/` directory. If there is a specific object for only one environment then put it under that environment's folder (e.g., `config/dev/`, `config/qa/`, `config/prod/`)[^1].
 
-[^1]: If you only have/want one environment you could delete dev/qa/prod folders in the group_vars directory and remove all the environment suffixes (e.g., `_dev`, `_qa`, `_prod`) from vars, keeping only `_all`. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
+[^1]: If you only have/want one environment you could delete dev/qa/prod folders in the config directory and remove all the environment suffixes (e.g., `_dev`, `_qa`, `_prod`) from vars, keeping only `_all`. Also if you want to have each team/group maintain their own org/code in their own repo, see the repo_per_org branch.
 
 The main branch is built for 2.5+ AAP if you are running 2.4 or lower make sure to copy the template branch aap2.4
 
 ## Secrets Management
 
-This repository uses `secrets.yml` files with inline encrypted vault strings instead of separate vault files. Each environment has its own secrets file located at `group_vars/<env>/secrets.yml` (e.g., `group_vars/dev/secrets.yml`, `group_vars/qa/secrets.yml`, `group_vars/prod/secrets.yml`).
+This repository uses `secrets.yml` files with inline encrypted vault strings instead of separate vault files. Each environment has its own secrets file located at `config/<env>/secrets.yml` (e.g., `config/dev/secrets.yml`, `config/qa/secrets.yml`, `config/prod/secrets.yml`).
 
 You will need to replace the encrypted values in your environment's `secrets.yml` file with your own vault-encrypted strings containing these variables:
 
@@ -81,7 +81,7 @@ ansible-vault encrypt_string 'your_secret_value' --name 'variable_name'
 ansible-vault encrypt_string --stdin-name 'variable_name'
 ```
 
-**_NOTE:_** Do not forget to update your inventory files in `inventory/` directory, replacing the `HERE` lines with your actual FQDNs. If you do not have a builder server you can use hub for this. Also update `scm_url` in `group_vars/all/controller_projects.yml` with your git URL.
+**_NOTE:_** Do not forget to update your inventory files in `inventory/` directory, replacing the `HERE` lines with your actual FQDNs. If you do not have a builder server you can use hub for this. Also update `scm_url` in `config/all/controller_projects.yml` with your git URL.
 
 ## Getting Help
 

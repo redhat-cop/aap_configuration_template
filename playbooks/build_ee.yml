@@ -29,6 +29,18 @@
                 state: latest
 
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Include ee_builder role
       ansible.builtin.include_role:
         name: infra.ee_utilities.ee_builder
