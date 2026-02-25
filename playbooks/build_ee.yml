@@ -17,7 +17,7 @@
                 name:
                   - ansible-builder
                   - ansible-core
-                enablerepo: ansible-automation-platform-2.4-for-rhel-8-x86_64-rpms
+                enablerepo: "ansible-automation-platform-{{ aap_setup_down_version }}-for-rhel-{{ ansible_facts['distribution_major_version'] }}-{{ ansible_facts['architecture'] }}-rpms"
                 state: present
               become: true
           rescue:
