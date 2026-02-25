@@ -1,11 +1,23 @@
 ---
 - name: Playbook to configure ansible controller post installation
   hosts: all
-  vars_files:
-    - ../vaults/{{ env }}.yml
   connection: local
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Call dispatch role
       ansible.builtin.include_role:
         name: infra.aap_configuration.dispatch
+      vars:
+        dispatch_include_wildcard_vars: true
 ...

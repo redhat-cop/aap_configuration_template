@@ -1,9 +1,0 @@
----
-# ah_auto_approve: true
-# hub_collections:
-#   - name: test
-#     namespace: community_test
-#     git_url: https://github.com/sean-m-sullivan/collection_test.git
-#     # key_path: "{{ lookup('env', 'MY_CERT_FILE') }}"
-#     # ssh_opts: '-o StrictHostKeyChecking=no'
-...

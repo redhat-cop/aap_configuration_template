@@ -1,6 +1,0 @@
----
-controller_inventories_dev:
-  - name: config_as_code_dev
-    description: inventory for configuring as
-    organization: config_as_code
-...

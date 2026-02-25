@@ -3,9 +3,19 @@
   hosts: all
   connection: local
   gather_facts: false
-  vars_files:
-    - ../vaults/{{ env }}.yml
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Refresh token
       ansible.builtin.uri:
         url: https://sso.redhat.com/auth/realms/redhat-external/protocol/openid-connect/token
