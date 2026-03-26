@@ -1,5 +1,8 @@
 ---
 name: ansible-lint
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
@@ -17,13 +20,12 @@ jobs:
     name: Ansible Lint # Naming the build is important to use it as a status check
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
+        uses: ansible/ansible-lint@f1b79918291273b23a8c3bf40e75a53a13d062b2 # main
         # optional (see below):
         with:
           # args: ""
           setup_python: "true"
           # working_directory: ""
           requirements_file: ".github/requirements.yml"
-...
