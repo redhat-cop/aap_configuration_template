@@ -1,0 +1,39 @@
+---
+all:
+  children:
+    dev:
+      hosts:
+        localhost:
+      vars:
+        connection: local
+
+    # ### These hosts are only required if you are installing AAP with aap.utilities collection ###
+    automationgateway:
+      hosts:
+        HERE: # FQDN of automation gateway if you have one. Otherwise, can be commented out if not in use.
+
+    automationcontroller:
+      hosts:
+        HERE: # FQDN of Automation Controller host(s)
+
+    automationhub:
+      hosts:
+        HERE: # FQDN of Automation Hub host(s). Can be commented out if not in use.
+
+    automationedacontroller:
+      hosts:
+        HERE: # FQDN of Automation EDA Controller host(s)
+
+    # Only needed if installing AAP with automation, can be removed if you are not. See Install docs if unsure what server should be the database host.
+    database:
+      hosts:
+        HERE:
+    # end of section ### These hosts are only required if you are installing AAP with aap.utilities collection ###
+
+  vars:
+    env: dev
+    aap_hostname: "{{ aap_host | default(groups['automationgateway'][0]) }}:{{ gateway_port | default(443) }}"
+    aap_username: "{{ aap_user | default('admin') }}"
+    aap_password: "{{ aap_pass }}"
+    aap_validate_certs: false
+...

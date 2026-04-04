@@ -2,8 +2,6 @@
 - name: Playbook to configure execution environments
   hosts: builder
   gather_facts: true
-  # vars_files:
-  #   - "../vaults/{{ env }}.yml"
   pre_tasks:
     - name: Validate that ansible-builder is installed on target system
       block:
@@ -31,6 +29,18 @@
                 state: latest
 
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Include ee_builder role
       ansible.builtin.include_role:
         name: infra.ee_utilities.ee_builder

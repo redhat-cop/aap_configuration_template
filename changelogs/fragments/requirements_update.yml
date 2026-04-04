@@ -3,4 +3,3 @@ major_changes:
    - updating requirements and playbooks to use ansible.hub and ansible.eda both available on galaxy
 
 ...
-

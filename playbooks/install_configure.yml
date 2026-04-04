@@ -2,9 +2,19 @@
 - name: Deploy Ansible Automation Platform
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
   connection: local
-  vars_files:
-    - "../vaults/{{ env }}.yml"
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Include aap_setup_download role
       ansible.builtin.include_role:
         name: infra.aap_utilities.aap_setup_download
@@ -19,10 +29,20 @@
 
 - name: Configure ansible controller post installation
   hosts: "{{ env | default('dev') }}" # noqa: syntax-check
-  vars_files:
-    - "../vaults/{{ env }}.yml"
   connection: local
   tasks:
+    - name: Include common vars
+      ansible.builtin.include_vars:
+        dir: ../config/all
+        extensions:
+          - 'yml'
+
+    - name: Include env vars
+      ansible.builtin.include_vars:
+        dir: "../config/{{ env }}"
+        extensions:
+          - 'yml'
+
     - name: Get subscriptions with a filter
       ansible.controller.subscriptions:
         username: "{{ rh_username }}"
