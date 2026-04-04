@@ -2,3 +2,6 @@ collections/*
 !collections/requirements.yml
 .ansible/
 .vscode/
+.env
+*.pem
+*.key
