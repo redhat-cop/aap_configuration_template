@@ -17,7 +17,7 @@ repos:
           - "--profile=production"
 
   - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.13.0
+    rev: v0.22.0
     hooks:
       - id: markdownlint-cli2
 ...
