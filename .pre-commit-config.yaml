@@ -7,7 +7,7 @@ repos:
       - id: trailing-whitespace
 
   - repo: 'https://github.com/ansible-community/ansible-lint.git'
-    rev: v24.2.2
+    rev: v26.4.0
     hooks:
       - id: ansible-lint
         pass_filenames: false
