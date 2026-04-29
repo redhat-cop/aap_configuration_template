@@ -56,7 +56,7 @@ vault_pass: !vault |
 ...
 ```
 
-### Variable Descriptions:
+### Variable Descriptions
 
 - `console_token`: Token from console.redhat.com for Red Hat Console access
 - `redhat_api_token`: API token for Red Hat API (see link below)
@@ -105,29 +105,31 @@ collections:
   - name: ansible.platform
   - name: ansible.hub
   - name: ansible.controller
+    version: ">=4.6.0"
   - name: ansible.eda
   - name: infra.aap_configuration
 ...
 ```
 
-
 ## Links to Ansible Automation Platform Collections
 
 |                                      Collection Name                                |            Purpose            |
 |:-----------------------------------------------------------------------------------:|:-----------------------------:|
-| ansible.platform repo (no public repo for this collection)                          | gateway/platform modules      |
+| [ansible.platform repo](https://github.com/ansible/ansible.platform)                | gateway/platform modules      |
 | [ansible.hub repo](https://github.com/ansible-collections/ansible_hub)              | Automation hub modules        |
 | [ansible.controller repo](https://github.com/ansible/awx/tree/devel/awx_collection) | Automation controller modules |
 | [ansible.eda repo](https://github.com/ansible/event-driven-ansible)                 | Event Driven Ansible modules  |
 
 ## Links to other Validated Configuration Collections for Ansible Automation Platform
 
-|                                      Collection Name                                       |                      Purpose                      |
-|:------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
-| [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)     | Where other useful roles that don't fit here live |
-| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                 | Execution Environment creation utilities          |
-| [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                  | Ansible Automation Platform Utilities             |
-| [AAP Configuration Template](https://github.com/redhat-cop/aap_configuration_template)     | Configuration Template for this suite             |
+|                                      Collection Name                                                  |                      Purpose                      |
+|:-----------------------------------------------------------------------------------------------------:|:-------------------------------------------------:|
+| [AAP Configuration](https://github.com/redhat-cop/infra.aap_configuration)                            | Main collection                                   |
+| [AAP Configuration Extended](https://github.com/redhat-cop/aap_configuration_extended)                | Where other useful roles that don't fit here live |
+| [EE Utilities](https://github.com/redhat-cop/ee_utilities)                                            | Execution Environment creation utilities          |
+| [AAP installation Utilities](https://github.com/redhat-cop/aap_utilities)                             | Ansible Automation Platform Utilities             |
+| [Ansible Validated Gitlab Workflows](https://gitlab.com/redhat-cop/infra/ansible_validated_workflows) | Gitlab CI/CD Workflows for ansible content        |
+| [Ansible Validated GitHub Workflows](https://github.com/redhat-cop/infra.ansible_validated_workflows) | GitHub CI/CD Workflows for ansible content        |
 
 ## AAP config
 
