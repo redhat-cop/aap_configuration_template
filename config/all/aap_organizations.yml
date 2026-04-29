@@ -1,3 +1,4 @@
 ---
-aap_organizations_all: []
+aap_organizations_all:
+  - name: config_as_code
 ...
